@@ -29,7 +29,7 @@ export default function EducationTimeline() {
           <h2 className="h2">Where I’m learning.</h2>
           <p className="mt-5 max-w-2xl text-white/65">
             My academic path from ICT in senior high school to an undergraduate
-            Computer Science program.
+            Computer Science program specializing in Software Engineering.
           </p>
         </div>
 

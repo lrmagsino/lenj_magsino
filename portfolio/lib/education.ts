@@ -14,7 +14,8 @@ export const education: Education[] = [
   {
     id: "feu-institute-of-technology",
     institution: "FEU Institute of Technology",
-    program: "Computer Science",
+    program:
+      "Bachelor of Science in Computer Science with Specialization in Software Engineering",
     level: "College / Undergraduate",
     dates: "2023–Present",
     status: "Currently studying",
