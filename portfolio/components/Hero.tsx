@@ -227,7 +227,7 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
           <span data-h className="inline-block">{profile.headline}</span>
         </p>
         <h1 className="font-display text-[clamp(2.1rem,9vw,6.5rem)] font-extrabold leading-[.97] tracking-[-0.04em]">
-          {["LENJ JESTHER", "MAGSINO"].map((word) => (
+          {["LENJ JESTHER", "R. MAGSINO"].map((word) => (
             <span key={word} className="block overflow-hidden">
               <span data-h className="block bg-gradient-to-r from-white to-cyan bg-clip-text text-transparent">{word}</span>
             </span>

@@ -1,5 +1,5 @@
 export const profile = {
-  name: "Lenj Jesther Magsino",
+  name: "Lenj Jesther R. Magsino",
   headline: "Full-Stack Developer | Computer Science Student",
   tagline: "Building Intelligent Systems. Creating Meaningful Digital Experiences.",
   email: "lenjmagsino@gmail.com",

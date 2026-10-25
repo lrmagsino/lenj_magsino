@@ -229,7 +229,7 @@ export default function PortfolioIntro() {
           </span>
           <span className="block overflow-hidden pb-1">
             <span data-intro-name className="block bg-gradient-to-r from-cyan to-white bg-clip-text text-transparent opacity-0">
-              MAGSINO
+              R. MAGSINO
             </span>
           </span>
         </h1>

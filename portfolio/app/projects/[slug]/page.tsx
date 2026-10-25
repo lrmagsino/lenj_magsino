@@ -1,7 +1,7 @@
 import Link from"next/link";import{notFound}from"next/navigation";import type{Metadata}from"next";import{projects}from"@/lib/content";import ProjectImage from"@/components/ProjectImage";
 type P={params:Promise<{slug:string}>};
 export const generateStaticParams=()=>projects.map(p=>({slug:p.id}));
-export async function generateMetadata({params}:P):Promise<Metadata>{const{slug}=await params;const p=projects.find(x=>x.id===slug);return p?{title:`${p.name} — Case study | Lenj Jesther Magsino`,description:`${p.tag}. ${p.desc}`}:{}}
+export async function generateMetadata({params}:P):Promise<Metadata>{const{slug}=await params;const p=projects.find(x=>x.id===slug);return p?{title:`${p.name} — Case study | Lenj Jesther R. Magsino`,description:`${p.tag}. ${p.desc}`}:{}}
 export default async function Page({params}:P){const{slug}=await params;const i=projects.findIndex(x=>x.id===slug);if(i<0)notFound();const p=projects[i];const n=projects[(i+1)%projects.length];
  const S=({h,c}:{h:string;c:string})=><section className="mt-12"><h2 className="eyebrow mb-3">{h}</h2><p className="max-w-3xl text-lg leading-relaxed text-white/80">{c}</p></section>;
  return(<main className="mx-auto max-w-5xl px-5 py-16"><Link href="/#projects" className="text-cyan hover:underline">← All projects</Link>

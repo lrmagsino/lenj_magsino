@@ -1,4 +1,4 @@
-# Lenj Jesther Magsino — Portfolio
+# Lenj Jesther R. Magsino — Portfolio
 
 An interactive portfolio built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, GSAP ScrollTrigger, and Lenis.
 
@@ -30,7 +30,7 @@ Restart the development server after adding the key. In Vercel, add the same var
 - `lib/certifications.ts` contains the 13 credential entries, category tags, optional logo/document paths, and verification URLs.
 - Original certificate images/PDFs and generated PDF-page previews are stored in `public/certificates/`; the original PDFs are available from the preview modal for download.
 - Official school logo assets are stored under `public/images/schools/`; their sources are listed in `CONTENT_TODO.md`.
-- `public/resume/lenj-magsino.pdf` is the expected résumé file. Résumé links remain unavailable until the file exists.
+- `public/resume/lenj-magsino.pdf` is the downloadable résumé linked from the navigation and hero section.
 - Put authentic certificate files in `public/certificates/` and update their paths and credential links in `lib/certifications.ts`.
 - Issuer names use accessible text marks until verified official brand assets are added.
 - `CONTENT_TODO.md` records details that are still needed to complete the content.

@@ -17,11 +17,10 @@ This file tracks only information or assets that could not be established from t
 - The LinkedIn certifications page could not be accessed publicly (HTTP 999). The supplied certificate files provide local evidence, but their public “Show credential” URLs are still needed where an issuer verification button is desired.
 - The two SAP certificate images include Credly badge URLs; these are used as their verification links.
 - Other issuer marks are visible on the genuine certificate documents. Separate issuer logo assets are not required for the certificate gallery.
-- The supplied details said TESDA Azure AI was issued in August 2023, but the provided certificate image itself reads **August 23, 2026**. The gallery follows the date printed on the certificate. Confirm if the image or supplied year is incorrect.
+- TESDA Azure AI was issued on **August 23, 2026**, as confirmed by Lenj and shown on the certificate.
 - The supplied PMI and Certiport certificates show the exact grant/issue days in their originals; their gallery entries use those printed days.
 
 ## Other pending items
 
-- Résumé PDF: add as `public/resume/lenj-magsino.pdf`; résumé links remain disabled until the file exists.
-- Employment, internship, leadership, or other experience details, if applicable.
+- No formal employment or internship history is claimed; project roles and team activities are presented in their relevant sections.
 - For projects: any additional documented outcomes or measurements. Current role and technology details reflect the information supplied by Lenj. Current project visuals are supplied presentation screenshots or captures of the live public websites.

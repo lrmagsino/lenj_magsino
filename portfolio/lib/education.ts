@@ -4,6 +4,7 @@ export type Education = {
   program: string;
   level: string;
   dates: string;
+  expectedGraduation?: string;
   status: string;
   logo: string;
   logoAlt: string;
@@ -18,6 +19,7 @@ export const education: Education[] = [
       "Bachelor of Science in Computer Science with Specialization in Software Engineering",
     level: "College / Undergraduate",
     dates: "2023–Present",
+    expectedGraduation: "2027",
     status: "Currently studying",
     logo: "/images/schools/feu-institute-of-technology.png",
     logoAlt: "Official FEU Institute of Technology seal",

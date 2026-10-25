@@ -83,6 +83,11 @@ export default function EducationTimeline() {
                     </p>
                     <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
                       <span className="font-mono text-cyan">{school.dates}</span>
+                      {school.expectedGraduation && (
+                        <span className="rounded-full border border-violet/30 px-3 py-1 text-xs text-violet">
+                          Expected graduation: {school.expectedGraduation}
+                        </span>
+                      )}
                       <span className="rounded-full border border-cyan/30 px-3 py-1 text-xs text-cyan">
                         {school.status}
                       </span>
@@ -120,9 +125,6 @@ export default function EducationTimeline() {
           ))}
         </ol>
 
-        <p data-reveal className="mt-12 border-l border-violet/50 pl-4 text-sm text-white/55">
-          Professional employment and internship details have not been provided.
-        </p>
       </div>
       <CinematicDialog
         source={previewSource}
@@ -157,6 +159,14 @@ export default function EducationTimeline() {
                   <dt className="text-sm text-white/45">Academic period</dt>
                   <dd className="mt-1 font-mono text-cyan">{selected.dates}</dd>
                 </div>
+                {selected.expectedGraduation && (
+                  <div>
+                    <dt className="text-sm text-white/45">Expected graduation</dt>
+                    <dd className="mt-1 font-mono text-violet">
+                      {selected.expectedGraduation}
+                    </dd>
+                  </div>
+                )}
                 <div>
                   <dt className="text-sm text-white/45">Status</dt>
                   <dd className="mt-1 text-white/80">{selected.status}</dd>
