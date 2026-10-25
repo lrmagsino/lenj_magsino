@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@theme{--color-midnight:#050B1A;--color-charcoal:#11182A;--color-electric:#2F6BFF;--color-cyan:#3CE0F0;--color-violet:#8B7CF6;--font-display:var(--font-sora),sans-serif;--font-mono:var(--font-jb),monospace}
+html{background:#050B1A;color:#e6ecff}
+body{font-family:var(--font-inter),system-ui,sans-serif;overflow-x:hidden}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+.eyebrow{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-cyan)}
+.h2{font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,6vw,4.5rem);line-height:1.02}
+.float{animation:float 9s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px) rotate(1.5deg)}}
+@keyframes pl{50%{opacity:.25}}
+.pulse{animation:pl 4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:focus-visible{outline:2px solid var(--color-cyan);outline-offset:3px}
