@@ -237,7 +237,7 @@ export default function PortfolioIntro() {
           data-intro-role
           className="mt-5 font-mono text-[clamp(.6rem,2.5vw,1rem)] font-medium uppercase tracking-[0.12em] text-cyan opacity-0 sm:mt-7 sm:tracking-[0.16em]"
         >
-          Software Engineer in the Making
+          Full-Stack Developer
         </p>
         <p
           id="portfolio-intro-tagline"

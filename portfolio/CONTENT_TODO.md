@@ -23,6 +23,5 @@ This file tracks only information or assets that could not be established from t
 ## Other pending items
 
 - Résumé PDF: add as `public/resume/lenj-magsino.pdf`; résumé links remain disabled until the file exists.
-- Current portrait/profile photo, if desired.
 - Employment, internship, leadership, or other experience details, if applicable.
-- For projects: specific individual responsibilities on collaborative work, the Red Warriors implementation technologies, and any documented outcomes or measurements. Current project visuals are supplied presentation screenshots or captures of the live public websites.
+- For projects: any additional documented outcomes or measurements. Current role and technology details reflect the information supplied by Lenj. Current project visuals are supplied presentation screenshots or captures of the live public websites.

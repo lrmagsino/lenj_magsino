@@ -4,9 +4,11 @@ import type { Project } from "@/lib/content";
 export default function ProjectImage({
   project,
   compact = false,
+  preview = false,
 }: {
   project: Pick<Project, "image">;
   compact?: boolean;
+  preview?: boolean;
 }) {
   const { image } = project;
 
@@ -14,7 +16,9 @@ export default function ProjectImage({
     <figure className="min-w-0">
       <div
         className={`relative overflow-hidden rounded-xl border border-white/10 bg-[#090f20] ${
-          compact ? "h-24 sm:aspect-[16/10] sm:h-auto" : "aspect-[16/10]"
+          compact
+            ? "h-24 sm:aspect-[16/10] sm:h-auto"
+            : `aspect-[16/10] ${preview ? "max-h-[42dvh] sm:max-h-[52dvh]" : ""}`
         }`}
       >
         <Image

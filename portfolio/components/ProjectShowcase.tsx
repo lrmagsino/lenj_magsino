@@ -137,19 +137,21 @@ export default function ProjectShowcase() {
       >
         {selected && (
           <div>
-            <div className="border-b border-white/10 bg-[#090f20] p-3 sm:p-6">
-              <ProjectImage project={selected} />
+            <div className="border-b border-white/10 bg-[#090f20] p-2 sm:p-6">
+              <ProjectImage project={selected} preview />
             </div>
-            <div className="p-6 sm:p-10">
+            <div className="p-4 sm:p-10">
               <p className="eyebrow">Project overview</p>
-              <h2 className="mt-2 max-w-4xl font-display text-3xl font-bold leading-tight sm:text-4xl">
+              <h2 className="mt-2 max-w-4xl font-display text-2xl font-bold leading-snug sm:text-4xl sm:leading-tight">
                 {selected.name}
               </h2>
-              <p className="mt-3 text-lg text-violet">{selected.tag}</p>
-              <p className="mt-5 max-w-3xl leading-relaxed text-white/75">
+              <p className="mt-2 text-base leading-relaxed text-violet sm:mt-3 sm:text-lg">
+                {selected.tag}
+              </p>
+              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/75 sm:mt-5 sm:text-base">
                 {selected.desc}
               </p>
-              <div className="mt-8 grid gap-5 lg:grid-cols-2">
+              <div className="mt-6 grid gap-3 sm:mt-8 sm:gap-5 lg:grid-cols-2">
                 {[
                   ["Problem", selected.problem],
                   ["Approach", selected.approach],
@@ -158,9 +160,9 @@ export default function ProjectShowcase() {
                 ].map(([label, text]) => (
                   <section
                     key={label}
-                    className="rounded-xl border border-white/10 bg-charcoal/60 p-5"
+                    className="rounded-xl border border-white/10 bg-charcoal/60 p-4 sm:p-5"
                   >
-                    <h3 className="font-display text-lg font-semibold text-cyan">
+                    <h3 className="font-display text-base font-semibold text-cyan sm:text-lg">
                       {label}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-white/70">
@@ -170,13 +172,13 @@ export default function ProjectShowcase() {
                 ))}
               </div>
               {selected.stack.length > 0 && (
-                <div className="mt-7">
+                <div className="mt-6 sm:mt-7">
                   <h3 className="font-display font-semibold">Technologies</h3>
                   <ul className="mt-3 flex flex-wrap gap-2">
                     {selected.stack.map((technology) => (
                       <li
                         key={technology}
-                        className="rounded-full border border-electric/30 bg-midnight/60 px-3 py-1.5 text-xs text-white/75"
+                        className="rounded-full border border-electric/30 bg-midnight/60 px-2.5 py-1 text-[11px] text-white/75 sm:px-3 sm:py-1.5 sm:text-xs"
                       >
                         {technology}
                       </li>
@@ -184,10 +186,10 @@ export default function ProjectShowcase() {
                   </ul>
                 </div>
               )}
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
                 <Link
                   href={`/projects/${selected.id}`}
-                  className="holo-link rounded-full border border-cyan/40 px-5 py-3 text-sm text-cyan"
+                  className="holo-link inline-flex min-h-11 items-center rounded-full border border-cyan/40 px-4 py-2.5 text-sm text-cyan sm:px-5 sm:py-3"
                 >
                   Full case study →
                 </Link>
@@ -196,7 +198,7 @@ export default function ProjectShowcase() {
                     href={selected.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="holo-link rounded-full border border-white/20 px-5 py-3 text-sm"
+                    className="holo-link inline-flex min-h-11 items-center rounded-full border border-white/20 px-4 py-2.5 text-sm sm:px-5 sm:py-3"
                   >
                     Live demo ↗
                   </a>
@@ -206,7 +208,7 @@ export default function ProjectShowcase() {
                     href={selected.repo}
                     target="_blank"
                     rel="noreferrer"
-                    className="holo-link rounded-full border border-white/20 px-5 py-3 text-sm"
+                    className="holo-link inline-flex min-h-11 items-center rounded-full border border-white/20 px-4 py-2.5 text-sm sm:px-5 sm:py-3"
                   >
                     GitHub ↗
                   </a>

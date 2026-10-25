@@ -1,6 +1,6 @@
 export const profile = {
   name: "Lenj Jesther Magsino",
-  headline: "Computer Science Student | Aspiring Software Engineer",
+  headline: "Full-Stack Developer | Computer Science Student",
   tagline: "Building Intelligent Systems. Creating Meaningful Digital Experiences.",
   email: "lenjmagsino@gmail.com",
   linkedin: "https://www.linkedin.com/in/lenj-jesther-magsino-a69824396/",
@@ -57,8 +57,7 @@ export const projects: Project[] = [
       "LayoutParser",
       "Firebase Authentication",
     ],
-    role:
-      "Listed as a member of the DocuGraph team on the public project site. Specific individual responsibilities have not been confirmed.",
+    role: "Full-stack developer on the DocuGraph project.",
     repo: "https://github.com/lenjimagsino/DOCUGRAPH_WEBSITE",
     demo: "https://docugraph.site/",
     image: {
@@ -88,8 +87,7 @@ export const projects: Project[] = [
       "Canvas REST API",
       "Chrome Extension APIs",
     ],
-    role:
-      "A collaborative project in the supplied public repository. The repository does not identify Lenj's specific responsibilities.",
+    role: "Lead developer of Mayari.",
     repo: "https://github.com/ostol-uriel/Computahhh",
     image: {
       src: "/images/projects/mayari/extension-popup.webp",
@@ -117,8 +115,7 @@ export const projects: Project[] = [
       "Android SDK",
       "MVVM",
     ],
-    role:
-      "Individual responsibilities and implementation technologies have not yet been confirmed.",
+    role: "Full-stack developer for the Red Warriors Advanced Ordering System and Point of Sale.",
     image: {
       src: "/images/projects/red-warriors/presentation.webp",
       width: 1439,
@@ -139,8 +136,7 @@ export const projects: Project[] = [
     tag: "FEU Tech Computer Science event website",
     desc: "An event website for the four-day CS Expo, bringing together capstone showcases, DevDay sessions, schedules, speakers, and attendee registration.",
     stack: ["Next.js", "React"],
-    role:
-      "Collaborative project. The public website does not specify Lenj's individual responsibilities.",
+    role: "Member of the CS Expo Developers team.",
     demo: "https://cs-expo-main-website.vercel.app/",
     image: {
       src: "/images/projects/cs-expo/hero.png",
@@ -172,8 +168,7 @@ export const projects: Project[] = [
       "Supabase",
       "Google Forms",
     ],
-    role:
-      "The public repository is under Lenj's GitHub account. Specific individual responsibilities are not separated in the project documentation.",
+    role: "Full-stack developer of the Fritz & Princess wedding website.",
     repo: "https://github.com/lrmagsino/FritzAndPrincess_Wedding2027",
     demo: "https://lrmagsino.github.io/FritzAndPrincess_Wedding2027/",
     image: {

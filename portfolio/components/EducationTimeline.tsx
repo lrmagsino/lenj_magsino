@@ -133,24 +133,26 @@ export default function EducationTimeline() {
         }}
       >
         {selected && (
-          <div className="grid gap-8 p-6 sm:grid-cols-[minmax(12rem,0.7fr)_1.3fr] sm:p-10">
-            <div className="flex min-h-56 items-center justify-center rounded-2xl bg-white p-8">
+          <div className="grid gap-5 p-4 sm:grid-cols-[minmax(12rem,0.7fr)_1.3fr] sm:gap-8 sm:p-10">
+            <div className="flex min-h-40 items-center justify-center rounded-2xl bg-white p-5 sm:min-h-56 sm:p-8">
               <Image
                 src={selected.logo}
                 alt={selected.logoAlt}
                 width={240}
                 height={240}
-                className="max-h-56 w-full object-contain"
+                className="max-h-40 w-full object-contain sm:max-h-56"
                 priority
               />
             </div>
             <div className="self-center">
               <p className="eyebrow">{selected.level}</p>
-              <h2 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl">
+              <h2 className="mt-3 font-display text-2xl font-bold leading-snug sm:text-4xl sm:leading-tight">
                 {selected.institution}
               </h2>
-              <p className="mt-5 text-lg text-white/80">{selected.program}</p>
-              <dl className="mt-7 grid gap-4 sm:grid-cols-2">
+              <p className="mt-4 text-base leading-relaxed text-white/80 sm:mt-5 sm:text-lg">
+                {selected.program}
+              </p>
+              <dl className="mt-6 grid gap-3 sm:mt-7 sm:grid-cols-2 sm:gap-4">
                 <div>
                   <dt className="text-sm text-white/45">Academic period</dt>
                   <dd className="mt-1 font-mono text-cyan">{selected.dates}</dd>
@@ -164,7 +166,7 @@ export default function EducationTimeline() {
                 href={selected.logoSource}
                 target="_blank"
                 rel="noreferrer"
-                className="holo-link mt-8 inline-flex min-h-11 items-center rounded-full border border-cyan/35 px-5 text-sm text-cyan"
+                className="holo-link mt-6 inline-flex min-h-11 items-center rounded-full border border-cyan/35 px-4 text-sm text-cyan sm:mt-8 sm:px-5"
               >
                 Official logo source ↗
               </a>

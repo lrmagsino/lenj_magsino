@@ -98,9 +98,9 @@ export default function SkillShowcase() {
         }}
       >
         {selected && (
-          <div className="p-6 pt-14 sm:p-10 sm:pt-16">
+          <div className="p-4 pt-14 sm:p-10 sm:pt-16">
             <p className="eyebrow">Technical skill</p>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl">
+            <h2 className="mt-3 font-display text-2xl font-bold leading-snug sm:text-4xl sm:leading-tight">
               {selected}
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
@@ -108,8 +108,8 @@ export default function SkillShowcase() {
               featured projects are shown below when the project’s documented
               technology stack includes it.
             </p>
-            <div className="mt-8">
-              <h3 className="font-display text-lg font-semibold text-cyan">
+            <div className="mt-6 sm:mt-8">
+              <h3 className="font-display text-base font-semibold text-cyan sm:text-lg">
                 Related featured projects
               </h3>
               {relatedProjects.length > 0 ? (

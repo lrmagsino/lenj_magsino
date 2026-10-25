@@ -134,6 +134,7 @@ export default function CinematicDialog({
     <dialog
       ref={dialogRef}
       aria-label={title}
+      data-lenis-prevent
       onCancel={(event) => {
         event.preventDefault();
         finishClose();
@@ -160,7 +161,7 @@ export default function CinematicDialog({
         closingRef.current = false;
         onCloseRef.current();
       }}
-      className="cinematic-dialog m-auto max-h-[94vh] max-h-[94dvh] w-[min(96vw,72rem)] max-w-none overflow-x-hidden overflow-y-auto rounded-2xl border border-cyan/25 bg-[#080e20] p-0 text-white shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md"
+      className="cinematic-dialog m-auto max-h-[90vh] max-h-[90dvh] w-[min(94vw,72rem)] max-w-none overflow-x-hidden overflow-y-auto rounded-2xl border border-cyan/25 bg-[#080e20] p-0 text-white shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md sm:max-h-[94vh] sm:max-h-[94dvh] sm:w-[min(96vw,72rem)]"
     >
       <div
         ref={panelRef}
