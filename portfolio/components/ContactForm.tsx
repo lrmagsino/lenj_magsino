@@ -25,7 +25,9 @@ export default function ContactForm() {
       setSubmission({
         status: "error",
         message:
-          "The contact form is not configured yet. Add NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY to portfolio/.env.local, then restart the development server.",
+          process.env.NODE_ENV === "production"
+            ? "The contact form is not configured for this deployment. Add NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY in Vercel → Project Settings → Environment Variables for Production, then redeploy."
+            : "The contact form is not configured yet. Add NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY to portfolio/.env.local, then restart the development server.",
       });
       return;
     }

@@ -110,7 +110,13 @@ export const projects: Project[] = [
     name: "Red Warriors Advanced Ordering System & Point of Sale",
     tag: "School canteen ordering and point of sale",
     desc: "A school canteen application designed to streamline food ordering, improve transaction management, and reduce queues for students.",
-    stack: [],
+    stack: [
+      "Kotlin",
+      "Android Studio",
+      "Firebase",
+      "Android SDK",
+      "MVVM",
+    ],
     role:
       "Individual responsibilities and implementation technologies have not yet been confirmed.",
     image: {
