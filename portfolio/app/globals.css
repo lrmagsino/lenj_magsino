@@ -1,13 +1,42 @@
 @import "tailwindcss";
 @theme{--color-midnight:#050B1A;--color-charcoal:#11182A;--color-electric:#2F6BFF;--color-cyan:#3CE0F0;--color-violet:#8B7CF6;--font-display:var(--font-sora),sans-serif;--font-mono:var(--font-jb),monospace}
-html{background:#050B1A;color:#e6ecff}
+html{background:#050B1A;color:#e6ecff;scroll-padding-top:5rem}body{background:#050B1A}
 body{font-family:var(--font-inter),system-ui,sans-serif;overflow-x:hidden}
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
 .eyebrow{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-cyan)}
 .h2{font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,6vw,4.5rem);line-height:1.02}
 .float{animation:float 9s ease-in-out infinite}
+.experience-main[aria-hidden="true"] *{animation-play-state:paused!important}
+[data-hscroll].is-scroll-driven{overflow:clip}
+[data-hscroll].is-scroll-driven [data-project-track]{display:flex;width:max-content;gap:1.5rem;padding-inline:clamp(1.25rem,3vw,3rem)}
+[data-hscroll].is-scroll-driven [data-project-card]{width:100%}
 @keyframes float{50%{transform:translateY(-14px) rotate(1.5deg)}}
 @keyframes pl{50%{opacity:.25}}
 .pulse{animation:pl 4s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 :focus-visible{outline:2px solid var(--color-cyan);outline-offset:3px}
+@keyframes certification-backdrop-in{from{opacity:0}to{opacity:1}}
+@keyframes certification-backdrop-out{to{opacity:0}}
+.holo-tilt{position:relative;isolation:isolate;border-radius:inherit}
+.holo-tilt::before,.holo-tilt::after{position:absolute;z-index:2;inset:0;border-radius:inherit;content:"";pointer-events:none;opacity:0;transition:opacity .25s ease}
+.holo-tilt::before{background:radial-gradient(360px circle at var(--pointer-x,50%) var(--pointer-y,50%),rgba(60,224,240,.2),rgba(47,107,255,.08) 35%,transparent 72%);mix-blend-mode:screen}
+.holo-tilt::after{border:1px solid rgba(60,224,240,.38);box-shadow:inset 0 0 28px rgba(47,107,255,.12),0 0 26px rgba(47,107,255,.14)}
+.holo-tilt:hover::before,.holo-tilt:hover::after,.holo-tilt[data-touch-active="true"]::before,.holo-tilt[data-touch-active="true"]::after{opacity:1}
+.holo-link{transition:color .2s ease,border-color .2s ease,background-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.holo-link:hover{box-shadow:0 0 22px rgba(47,107,255,.2);transform:translateY(-1px)}
+.cinematic-dialog{overscroll-behavior:contain}
+.cinematic-dialog::backdrop{background:rgb(5 11 26/.84);backdrop-filter:blur(10px);animation:certification-backdrop-in .25s ease-out both}
+.cinematic-dialog.is-closing::backdrop{animation:certification-backdrop-out .48s ease-in both}
+.cinematic-dialog-panel{transform-origin:top left;will-change:transform,opacity}
+@media (prefers-reduced-motion:reduce){.holo-tilt::before,.holo-tilt::after,.holo-link,.cinematic-dialog::backdrop,.cinematic-dialog.is-closing::backdrop{transition:none;animation:none}.holo-link:hover{transform:none}}
+@media (max-width:639px){.eyebrow{font-size:.65rem;letter-spacing:.14em}}
+@media (max-height:500px){.cinematic-dialog{max-height:96dvh}.cinematic-dialog-panel{max-height:96dvh}}
+@media (max-width:767px) and (max-height:600px){
+  [data-hscroll].is-scroll-driven [data-project-card]{gap:.375rem;padding:.5rem}
+  [data-hscroll].is-scroll-driven [data-project-card] figure>div{height:4.5rem}
+  [data-hscroll].is-scroll-driven [data-project-card] h3{font-size:.875rem;line-height:1.2}
+  [data-hscroll].is-scroll-driven [data-project-card] p{line-height:1.25}
+  [data-hscroll].is-scroll-driven [data-project-card] ul[aria-label="Featured technologies"]{gap:.25rem}
+  [data-hscroll].is-scroll-driven [data-project-card] ul[aria-label="Featured technologies"] li{padding:.125rem .4rem;font-size:.55rem;line-height:.75rem}
+  [data-hscroll].is-scroll-driven [data-project-card] button{min-height:2rem;padding:.35rem .6rem}
+}
