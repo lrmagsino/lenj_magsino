@@ -24,13 +24,13 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 .holo-tilt:hover::before,.holo-tilt:hover::after,.holo-tilt[data-touch-active="true"]::before,.holo-tilt[data-touch-active="true"]::after{opacity:1}
 .holo-link{transition:color .2s ease,border-color .2s ease,background-color .2s ease,box-shadow .2s ease,transform .2s ease}
 .holo-link:hover{box-shadow:0 0 22px rgba(47,107,255,.2);transform:translateY(-1px)}
-.cinematic-dialog{overscroll-behavior:contain}
+.cinematic-dialog{overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
 .cinematic-dialog::backdrop{background:rgb(5 11 26/.84);backdrop-filter:blur(10px);animation:certification-backdrop-in .25s ease-out both}
 .cinematic-dialog.is-closing::backdrop{animation:certification-backdrop-out .48s ease-in both}
 .cinematic-dialog-panel{transform-origin:top left;will-change:transform,opacity}
 @media (prefers-reduced-motion:reduce){.holo-tilt::before,.holo-tilt::after,.holo-link,.cinematic-dialog::backdrop,.cinematic-dialog.is-closing::backdrop{transition:none;animation:none}.holo-link:hover{transform:none}}
 @media (max-width:639px){.eyebrow{font-size:.65rem;letter-spacing:.14em}}
-@media (max-height:500px){.cinematic-dialog{max-height:96dvh}.cinematic-dialog-panel{max-height:96dvh}}
+@media (max-height:500px){.cinematic-dialog{max-height:96vh;max-height:96dvh}}
 @media (max-width:767px) and (max-height:600px){
   [data-hscroll].is-scroll-driven [data-project-card]{gap:.375rem;padding:.5rem}
   [data-hscroll].is-scroll-driven [data-project-card] figure>div{height:4.5rem}

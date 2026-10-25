@@ -160,11 +160,11 @@ export default function CinematicDialog({
         closingRef.current = false;
         onCloseRef.current();
       }}
-      className="cinematic-dialog m-auto max-h-[94dvh] w-[min(96vw,72rem)] max-w-none overflow-hidden rounded-2xl border border-cyan/25 bg-[#080e20] p-0 text-white shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md"
+      className="cinematic-dialog m-auto max-h-[94vh] max-h-[94dvh] w-[min(96vw,72rem)] max-w-none overflow-x-hidden overflow-y-auto rounded-2xl border border-cyan/25 bg-[#080e20] p-0 text-white shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md"
     >
       <div
         ref={panelRef}
-        className="cinematic-dialog-panel relative max-h-[94dvh] overflow-y-auto rounded-2xl"
+        className="cinematic-dialog-panel relative rounded-2xl"
       >
         <button
           type="button"

@@ -78,9 +78,12 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
       };
     }
 
-    if (state.phase === "ready") {
+    if (state.phase === "ready" || state.phase === "main-entering") {
       document.documentElement.style.overflow = originalPageState.current.htmlOverflow;
       document.body.style.overflow = originalPageState.current.bodyOverflow;
+      if (state.phase === "ready") {
+        history.scrollRestoration = originalPageState.current.scrollRestoration;
+      }
       return;
     }
 
