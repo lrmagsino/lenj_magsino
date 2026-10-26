@@ -5,6 +5,7 @@ import { useState } from "react";
 import { education } from "@/lib/education";
 import CinematicDialog from "@/components/CinematicDialog";
 import Tilt from "@/components/Tilt";
+import CardInteractionHint from "@/components/CardInteractionHint";
 
 export default function EducationTimeline() {
   const [selected, setSelected] = useState<(typeof education)[number] | null>(
@@ -16,6 +17,7 @@ export default function EducationTimeline() {
     <section
       id="education"
       data-bg="#11182A"
+      data-bg-light="#f3f6fb"
       className="relative z-10 isolate overflow-hidden px-5 py-20 sm:py-28 lg:py-32"
     >
       <div
@@ -58,10 +60,22 @@ export default function EducationTimeline() {
                     : "md:col-start-1 md:row-start-1"
                 }`}
               >
-                <div className="flex min-w-0 flex-col items-start gap-4 rounded-2xl border border-white/10 bg-charcoal/75 p-4 shadow-[0_20px_60px_-35px_#2F6BFF88] min-[480px]:flex-row min-[480px]:items-center min-[480px]:p-5 sm:gap-5 sm:p-7">
+                <div className="group relative flex min-w-0 flex-col items-start gap-4 rounded-2xl border border-white/10 bg-charcoal/75 p-4 pb-16 shadow-[0_20px_60px_-35px_#2F6BFF88] min-[480px]:flex-row min-[480px]:items-center min-[480px]:p-5 min-[480px]:pb-16 sm:gap-5 sm:p-7 sm:pb-16">
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      setSelected(school);
+                      setPreviewSource(event.currentTarget);
+                    }}
+                    className="absolute inset-0 z-10 cursor-pointer rounded-2xl focus-visible:outline-cyan"
+                    aria-label={`Open education details for ${school.institution}`}
+                    aria-haspopup="dialog"
+                  >
+                    <CardInteractionHint className="bottom-3 right-3 sm:bottom-4 sm:right-5" />
+                  </button>
                   <div
                     data-logo-reveal
-                    className="grid h-20 w-20 shrink-0 place-items-center rounded-xl bg-white shadow-lg min-[480px]:h-24 min-[480px]:w-24 sm:h-28 sm:w-28"
+                    className="logo-frame pointer-events-none relative z-0 grid h-20 w-20 shrink-0 place-items-center rounded-xl bg-white shadow-lg min-[480px]:h-24 min-[480px]:w-24 sm:h-28 sm:w-28"
                   >
                     <div className="relative h-16 w-16 min-[480px]:h-20 min-[480px]:w-20 sm:h-24 sm:w-24">
                       <Image
@@ -73,7 +87,7 @@ export default function EducationTimeline() {
                       />
                     </div>
                   </div>
-                  <div className="min-w-0">
+                  <div className="pointer-events-none relative z-20 min-w-0">
                     <p className="eyebrow text-xs">{school.level}</p>
                     <h3 className="mt-2 font-display text-xl font-semibold leading-snug sm:text-2xl">
                       {school.institution}
@@ -96,21 +110,10 @@ export default function EducationTimeline() {
                       href={school.logoSource}
                       target="_blank"
                       rel="noreferrer"
-                      className="holo-link mt-3 inline-flex text-xs text-white/40 underline decoration-white/20 underline-offset-4 hover:text-cyan"
+                      className="holo-link pointer-events-auto relative z-30 mt-3 inline-flex text-xs text-white/40 underline decoration-white/20 underline-offset-4 hover:text-cyan"
                     >
                       Official logo source ↗
                     </a>
-                    <button
-                      type="button"
-                      onClick={(event) => {
-                        setSelected(school);
-                        setPreviewSource(event.currentTarget);
-                      }}
-                      className="holo-link mt-3 flex min-h-11 items-center rounded-full border border-cyan/30 px-4 text-xs text-cyan hover:border-cyan"
-                      aria-label={`View education details for ${school.institution}`}
-                    >
-                      View education details
-                    </button>
                   </div>
                 </div>
               </Tilt>
@@ -136,7 +139,7 @@ export default function EducationTimeline() {
       >
         {selected && (
           <div className="grid gap-5 p-4 sm:grid-cols-[minmax(12rem,0.7fr)_1.3fr] sm:gap-8 sm:p-10">
-            <div className="flex min-h-40 items-center justify-center rounded-2xl bg-white p-5 sm:min-h-56 sm:p-8">
+            <div className="logo-frame flex min-h-40 items-center justify-center rounded-2xl bg-white p-5 sm:min-h-56 sm:p-8">
               <Image
                 src={selected.logo}
                 alt={selected.logoAlt}

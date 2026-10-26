@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import CinematicDialog from "@/components/CinematicDialog";
 import Tilt from "@/components/Tilt";
+import CardInteractionHint from "@/components/CardInteractionHint";
 import {
   certificationCategories,
   certifications,
@@ -25,7 +26,7 @@ function CertificateArtwork({
 
   if (certification.certificateImage) {
     return (
-      <div className="relative aspect-[16/10] overflow-hidden bg-[#11182A]">
+      <div className="theme-image-frame relative aspect-[16/10] overflow-hidden bg-[#11182A]">
         {!loaded && (
           <div
             aria-live={failed ? "polite" : undefined}
@@ -46,11 +47,11 @@ function CertificateArtwork({
           src={certification.certificateImage}
           alt={`Certificate preview for ${certification.title}`}
           fill
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1279px) 50vw, 33vw"
           loading={eager ? "eager" : "lazy"}
           onLoad={() => setLoaded(true)}
           onError={() => setFailed(true)}
-          className={`object-contain transition-transform duration-500 group-hover:scale-[1.025] ${
+          className={`object-contain ${
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -59,7 +60,7 @@ function CertificateArtwork({
   }
 
   return (
-    <div className="relative flex aspect-[16/10] flex-col justify-between overflow-hidden border-b border-white/10 bg-[radial-gradient(ellipse_at_80%_15%,#2F6BFF22,transparent_45%),linear-gradient(135deg,#11182A,#080e20)] p-5 sm:p-6">
+    <div className="theme-certificate-art relative flex aspect-[16/10] flex-col justify-between overflow-hidden border-b border-white/10 bg-[radial-gradient(ellipse_at_80%_15%,#2F6BFF22,transparent_45%),linear-gradient(135deg,#11182A,#080e20)] p-5 sm:p-6">
       <div className="absolute -right-10 -top-12 h-40 w-40 rounded-full border border-white/5" />
       <div className="absolute -right-2 -top-4 h-24 w-24 rounded-full border border-white/5" />
       <div className="relative flex items-start justify-between gap-3">
@@ -112,73 +113,70 @@ function CertificationCard({
   return (
     <Tilt className="rounded-2xl">
       <article
-        className="certification-card group min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-charcoal/75 transition duration-300 hover:-translate-y-1 hover:border-cyan/35 hover:shadow-[0_24px_70px_-36px_#2F6BFF88]"
+        className="certification-card group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-charcoal/75 transition duration-300 hover:-translate-y-1 hover:border-cyan/35 hover:shadow-[0_24px_70px_-36px_#2F6BFF88]"
         style={{ animationDelay: `${Math.min(index, 7) * 55}ms` }}
       >
         <button
           type="button"
           onClick={(event) => onOpen(certification, event.currentTarget)}
-          className="group relative block w-full cursor-zoom-in text-left focus-visible:outline-cyan"
+          className="absolute inset-0 z-10 cursor-zoom-in rounded-2xl focus-visible:outline-cyan"
           aria-label={`Open certificate preview for ${certification.title}`}
+          aria-haspopup="dialog"
         >
-          <CertificateArtwork certification={certification} eager={eager} />
-          <span className="absolute bottom-3 right-3 translate-y-1 rounded-full border border-cyan/40 bg-midnight/90 px-3 py-1.5 text-xs text-cyan opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
-            View certificate
-          </span>
+          <CardInteractionHint className="bottom-3 right-3" />
         </button>
-        <div className="p-5 sm:p-6">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="eyebrow text-[10px]">{certification.issuer}</p>
-          {certification.featured && (
-            <span className="rounded-full border border-violet/40 px-2.5 py-1 text-[10px] text-violet">
-              Featured
-            </span>
-          )}
-        </div>
-        <h3 className="mt-3 font-display text-lg font-semibold leading-snug sm:text-xl">
-          {certification.title}
-        </h3>
-        <dl className="mt-4 grid grid-cols-2 gap-3 text-xs sm:text-sm">
-          <div>
-            <dt className="text-white/40">Issued</dt>
-            <dd className="mt-1 text-white/75">{certification.issueDate}</dd>
-          </div>
-          <div>
-            <dt className="text-white/40">Expires</dt>
-            <dd className="mt-1 text-white/75">{certification.expirationDate ?? "Not specified"}</dd>
-          </div>
-          {certification.credentialId && (
-            <div className="col-span-2 min-w-0">
-              <dt className="text-white/40">Credential ID</dt>
-              <dd className="mt-1 break-all font-mono text-xs text-white/70">
-                {certification.credentialId}
-              </dd>
+        <div className="pointer-events-none relative z-0 flex flex-1 flex-col">
+          <CertificateArtwork certification={certification} eager={eager} />
+          <div className="flex flex-1 flex-col p-5 pb-16 sm:p-6 sm:pb-16">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="eyebrow text-[10px]">{certification.issuer}</p>
+              {certification.featured && (
+                <span className="rounded-full border border-violet/40 px-2.5 py-1 text-[10px] text-violet">
+                  Featured
+                </span>
+              )}
             </div>
-          )}
-        </dl>
-        <ul aria-label="Skills" className="mt-4 flex flex-wrap gap-2">
-          {certification.skills.map((skill) => (
-            <li
-              key={skill}
-              className="rounded-full border border-electric/25 bg-midnight/60 px-2.5 py-1 text-[11px] text-white/65"
-            >
-              {skill}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
-          <span className="text-xs text-white/40">
-            {certification.certificateFile ? "Certificate available" : "Certificate file pending"}
-          </span>
-          <button
-            type="button"
-            onClick={(event) => onOpen(certification, event.currentTarget)}
-            className="rounded-full border border-cyan/30 px-4 py-2 text-sm text-cyan transition hover:bg-cyan/10 focus-visible:outline-cyan"
-            aria-label={`View details for ${certification.title}`}
-          >
-            View details
-          </button>
-        </div>
+            <h3 className="mt-3 min-h-[3.5rem] break-words font-display text-lg font-semibold leading-snug sm:text-xl">
+              {certification.title}
+            </h3>
+            <dl className="mt-4 grid grid-cols-2 gap-3 text-xs sm:text-sm">
+              <div>
+                <dt className="text-white/40">Issued</dt>
+                <dd className="mt-1 text-white/75">{certification.issueDate}</dd>
+              </div>
+              <div>
+                <dt className="text-white/40">Expires</dt>
+                <dd className="mt-1 text-white/75">
+                  {certification.expirationDate ?? "Not specified"}
+                </dd>
+              </div>
+              {certification.credentialId && (
+                <div className="col-span-2 min-w-0">
+                  <dt className="text-white/40">Credential ID</dt>
+                  <dd className="mt-1 break-all font-mono text-xs text-white/70">
+                    {certification.credentialId}
+                  </dd>
+                </div>
+              )}
+            </dl>
+            <ul aria-label="Skills" className="mt-4 flex flex-wrap gap-2">
+              {certification.skills.map((skill) => (
+                <li
+                  key={skill}
+                  className="rounded-full border border-electric/25 bg-midnight/60 px-2.5 py-1 text-[11px] text-white/65"
+                >
+                  {skill}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/10 pt-4">
+              <span className="text-xs text-white/40">
+                {certification.certificateFile
+                  ? "Certificate available"
+                  : "Certificate file pending"}
+              </span>
+            </div>
+          </div>
         </div>
       </article>
     </Tilt>
@@ -352,6 +350,7 @@ export default function CertificationGallery() {
     <section
       id="certifications"
       data-bg="#0a1330"
+      data-bg-light="#eaf1fa"
       className="relative z-10 isolate overflow-hidden px-5 py-20 sm:py-28 lg:py-32"
     >
       <div
@@ -424,7 +423,7 @@ export default function CertificationGallery() {
           Showing {visible.length} of {certifications.length} credentials
         </div>
 
-        <div className="grid items-start gap-5 md:grid-cols-2">
+        <div className="grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
           {visible.map((certification, index) => (
             <CertificationCard
               key={certification.id}

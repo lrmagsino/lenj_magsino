@@ -3,6 +3,15 @@
 import { useLayoutEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 
+function resetInternalScroll(dialog: HTMLDialogElement, panel: HTMLDivElement) {
+  dialog.scrollTop = 0;
+  panel
+    .querySelectorAll<HTMLElement>("[data-dialog-scroll]")
+    .forEach((element) => {
+      element.scrollTop = 0;
+    });
+}
+
 export default function CinematicDialog({
   source,
   title,
@@ -29,12 +38,16 @@ export default function CinematicDialog({
     const panel = panelRef.current;
     if (!source || !dialog || !panel || dialog.open) return;
 
+    const resetScroll = () => resetInternalScroll(dialog, panel);
+
     sourceRef.current = source;
     closingRef.current = false;
     dialog.showModal();
+    resetScroll();
     window.dispatchEvent(new CustomEvent("portfolio:overlay-open"));
 
     const animateIn = () => {
+      resetScroll();
       const sourceRect = source.getBoundingClientRect();
       const targetRect = panel.getBoundingClientRect();
       const reducedMotion = window.matchMedia(
@@ -65,6 +78,7 @@ export default function CinematicDialog({
           duration: 0.62,
           ease: "power3.inOut",
           clearProps: "transform,opacity",
+          onComplete: resetScroll,
         },
       );
     };
@@ -148,7 +162,11 @@ export default function CinematicDialog({
       onClick={(event) => {
         if (event.target === event.currentTarget) finishClose();
       }}
-      onClose={() => {
+      onClose={(event) => {
+        if (event.target !== event.currentTarget) return;
+        if (dialogRef.current && panelRef.current) {
+          resetInternalScroll(dialogRef.current, panelRef.current);
+        }
         timelineRef.current?.kill();
         gsap.set(panelRef.current, { clearProps: "all" });
         dialogRef.current?.classList.remove("is-closing");
@@ -161,7 +179,7 @@ export default function CinematicDialog({
         closingRef.current = false;
         onCloseRef.current();
       }}
-      className="cinematic-dialog m-auto max-h-[90vh] max-h-[90dvh] w-[min(94vw,72rem)] max-w-none overflow-x-hidden overflow-y-auto rounded-2xl border border-cyan/25 bg-[#080e20] p-0 text-white shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md sm:max-h-[94vh] sm:max-h-[94dvh] sm:w-[min(96vw,72rem)]"
+      className="cinematic-dialog theme-dialog m-auto max-h-[90vh] max-h-[90dvh] w-[min(94vw,72rem)] max-w-none overflow-x-hidden overflow-y-auto rounded-2xl border border-cyan/25 bg-charcoal p-0 text-white shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md sm:max-h-[94vh] sm:max-h-[94dvh] sm:w-[min(96vw,72rem)]"
     >
       <div
         ref={panelRef}

@@ -11,16 +11,18 @@ import {
   useRef,
   type ReactNode,
 } from "react";
+import { consumePortfolioReturnMarker } from "@/lib/portfolioNavigation";
 
 export type ExperiencePhase = "intro" | "intro-exiting" | "main-entering" | "ready";
 
 type ExperienceState = {
   phase: ExperiencePhase;
   initialized: boolean;
+  resumePortfolio: boolean;
 };
 
 type ExperienceAction =
-  | { type: "initialize"; playIntro: boolean }
+  | { type: "initialize"; playIntro: boolean; resumePortfolio: boolean }
   | { type: "begin-exit" }
   | { type: "enter-main" }
   | { type: "ready" };
@@ -32,7 +34,11 @@ type ExperienceContextValue = ExperienceState & {
 };
 
 const ExperienceContext = createContext<ExperienceContextValue | null>(null);
-const initialState: ExperienceState = { phase: "intro", initialized: false };
+const initialState: ExperienceState = {
+  phase: "intro",
+  initialized: false,
+  resumePortfolio: false,
+};
 
 function experienceReducer(
   state: ExperienceState,
@@ -41,7 +47,11 @@ function experienceReducer(
   switch (action.type) {
     case "initialize":
       if (state.initialized) return state;
-      return { initialized: true, phase: action.playIntro ? "intro" : "main-entering" };
+      return {
+        initialized: true,
+        phase: action.playIntro ? "intro" : "main-entering",
+        resumePortfolio: action.resumePortfolio,
+      };
     case "begin-exit":
       return state.phase === "intro" ? { ...state, phase: "intro-exiting" } : state;
     case "enter-main":
@@ -65,8 +75,30 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const markReady = useCallback(() => dispatch({ type: "ready" }), []);
 
   useEffect(() => {
-    const shouldPlayIntro = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    dispatch({ type: "initialize", playIntro: shouldPlayIntro });
+    const resumePortfolio = consumePortfolioReturnMarker();
+    const navigationEntry = performance.getEntriesByType(
+      "navigation",
+    )[0] as PerformanceNavigationTiming | undefined;
+    const fullPageReload = navigationEntry?.type === "reload";
+    const shouldPlayIntro =
+      !resumePortfolio &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let resetScrollFrame: number | null = null;
+    if (fullPageReload && !resumePortfolio) {
+      history.scrollRestoration = "manual";
+      window.scrollTo({ top: 0, behavior: "instant" });
+      resetScrollFrame = requestAnimationFrame(() => {
+        resetScrollFrame = requestAnimationFrame(() => {
+          window.scrollTo({ top: 0, behavior: "instant" });
+        });
+      });
+    }
+
+    dispatch({ type: "initialize", playIntro: shouldPlayIntro, resumePortfolio });
+    return () => {
+      if (resetScrollFrame !== null) cancelAnimationFrame(resetScrollFrame);
+    };
   }, []);
 
   useLayoutEffect(() => {

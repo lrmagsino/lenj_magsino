@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import CinematicDialog from "@/components/CinematicDialog";
 import Tilt from "@/components/Tilt";
 import { projects, skills } from "@/lib/content";
+import { savePortfolioReturn } from "@/lib/portfolioNavigation";
 
 export default function SkillShowcase() {
   const [selected, setSelected] = useState<string | null>(null);
@@ -27,6 +29,7 @@ export default function SkillShowcase() {
       <section
         id="skills"
         data-bg="#11182A"
+        data-bg-light="#edf3fa"
         className="relative z-10 overflow-hidden px-5 py-20 sm:py-28 lg:py-32"
       >
         {["</>", "{ }", "SQL", "AI", "::"].map((glyph, index) => (
@@ -75,9 +78,13 @@ export default function SkillShowcase() {
                               setSelected(skill);
                               setSource(event.currentTarget);
                             }}
+                            aria-haspopup="dialog"
                             className="holo-link min-h-11 rounded-lg border border-electric/30 bg-charcoal px-3.5 py-2 text-left text-sm text-white/85 hover:border-cyan hover:text-cyan sm:px-4"
                           >
                             {skill}
+                            <span aria-hidden="true" className="ml-2 text-cyan/70">
+                              ↗
+                            </span>
                           </button>
                         </Tilt>
                       </li>
@@ -119,12 +126,27 @@ export default function SkillShowcase() {
                       key={project.id}
                       className="rounded-xl border border-white/10 bg-charcoal/65 p-4"
                     >
-                      <p className="font-display font-semibold">
-                        {project.name}
-                      </p>
+                      <h4 className="font-display font-semibold">{project.name}</h4>
                       <p className="mt-1 text-sm leading-relaxed text-white/60">
                         {project.tag}
                       </p>
+                      <Link
+                        href={`/projects/${project.id}`}
+                        onClick={(event) => {
+                          if (
+                            event.button === 0 &&
+                            !event.metaKey &&
+                            !event.ctrlKey &&
+                            !event.shiftKey &&
+                            !event.altKey
+                          ) {
+                            savePortfolioReturn(project.id);
+                          }
+                        }}
+                        className="holo-link mt-3 inline-flex min-h-10 items-center text-sm text-cyan hover:underline"
+                      >
+                        Open case study →
+                      </Link>
                     </li>
                   ))}
                 </ul>

@@ -5,19 +5,21 @@ export default function ProjectImage({
   project,
   compact = false,
   preview = false,
+  preload = false,
 }: {
   project: Pick<Project, "image">;
   compact?: boolean;
   preview?: boolean;
+  preload?: boolean;
 }) {
   const { image } = project;
 
   return (
     <figure className="min-w-0">
       <div
-        className={`relative overflow-hidden rounded-xl border border-white/10 bg-[#090f20] ${
+        className={`theme-image-frame relative overflow-hidden rounded-xl border border-white/10 bg-[#090f20] ${
           compact
-            ? "h-24 sm:aspect-[16/10] sm:h-auto"
+            ? "aspect-[2/1]"
             : `aspect-[16/10] ${preview ? "max-h-[42dvh] sm:max-h-[52dvh]" : ""}`
         }`}
       >
@@ -31,7 +33,7 @@ export default function ProjectImage({
               ? "(min-width: 1024px) 44rem, 85vw"
               : "(min-width: 1024px) 60rem, 95vw"
           }
-          loading="eager"
+          {...(preload ? { preload: true } : { loading: "eager" as const })}
           className="h-full w-full object-contain"
         />
       </div>

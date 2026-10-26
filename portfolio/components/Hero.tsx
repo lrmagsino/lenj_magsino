@@ -141,12 +141,12 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
     <section id="home" ref={root} className="relative z-10 flex min-h-dvh items-center overflow-hidden">
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(60%_50%_at_75%_35%,#2F6BFF2B,transparent),radial-gradient(40%_40%_at_15%_85%,#8B7CF622,transparent)]"
+        className="hero-atmosphere absolute inset-0"
       />
       <svg aria-hidden="true" className="absolute inset-0 h-full w-full opacity-40" data-depth="0.08">
         <defs>
           <pattern id="hero-grid" width="56" height="56" patternUnits="userSpaceOnUse">
-            <path d="M56 0H0V56" fill="none" stroke="#2F6BFF" strokeOpacity=".18" />
+            <path d="M56 0H0V56" fill="none" stroke="var(--color-electric)" strokeOpacity=".18" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#hero-grid)" />
@@ -155,7 +155,7 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
         <div data-mesh data-depth="0.12" className="absolute inset-[6%]">
           <div data-m="14" className="absolute inset-0">
             <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <g className="pulse" stroke="#3CE0F0" strokeOpacity=".28" fill="none">
+              <g className="pulse" stroke="var(--color-cyan)" strokeOpacity=".28" fill="none">
                 {L.map(([start, end]) => (
                   <line
                     key={`${start}-${end}`}

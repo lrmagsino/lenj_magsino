@@ -114,13 +114,35 @@ export default function PortfolioIntro() {
         "[data-intro-role]",
         { y: 14, opacity: 0, letterSpacing: "0.28em" },
         { y: 0, opacity: 1, letterSpacing: "0.16em", duration: 0.48 },
-        "-=0.1",
+        "-=0.6",
       )
       .fromTo(
         "[data-intro-tagline]",
         { y: 12, opacity: 0 },
         { y: 0, opacity: 0.78, duration: 0.48 },
-        "-=0.12",
+        "-=0.48",
+      )
+      .to(
+        "[data-intro-orbit]",
+        {
+          rotation: 8,
+          scale: 1.025,
+          duration: 2.5,
+          ease: "sine.inOut",
+        },
+        "+=0",
+      )
+      .to(
+        "[data-intro-ambient]",
+        {
+          opacity: 0.38,
+          scale: 1.04,
+          duration: 1.25,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: 1,
+        },
+        "<",
       );
 
     return () => {
@@ -168,7 +190,7 @@ export default function PortfolioIntro() {
           beginIntroExit();
         }
       }}
-      className="fixed inset-0 z-[100] grid min-h-dvh place-items-center overflow-hidden overscroll-none bg-[#050B1A]/80 px-4 py-16 text-center backdrop-blur-[2px] touch-none sm:px-5 sm:py-12"
+      className="portfolio-intro fixed inset-0 z-[100] grid min-h-dvh place-items-center overflow-hidden overscroll-none bg-[#050B1A]/80 px-4 py-16 text-center backdrop-blur-[2px] touch-none sm:px-5 sm:py-12"
       style={{
         backgroundImage:
           "radial-gradient(ellipse at 50% 45%, rgba(47,107,255,.2), transparent 48%), radial-gradient(ellipse at 18% 82%, rgba(139,124,246,.12), transparent 36%)",
@@ -176,6 +198,7 @@ export default function PortfolioIntro() {
     >
       <div
         aria-hidden="true"
+        data-intro-ambient
         className="pointer-events-none absolute inset-0 opacity-25"
         style={{
           backgroundImage:

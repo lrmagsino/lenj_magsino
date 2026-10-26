@@ -64,7 +64,7 @@ export default function Tilt({
     >
       <div
         ref={cardRef}
-        className="relative transition-transform duration-300 ease-out [transform-style:preserve-3d]"
+        className="relative h-full transition-transform duration-300 ease-out [transform-style:preserve-3d]"
       >
         {children}
       </div>

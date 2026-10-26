@@ -6,6 +6,9 @@ import CinematicDialog from "@/components/CinematicDialog";
 import Tilt from "@/components/Tilt";
 import { projects, type Project } from "@/lib/content";
 import ProjectImage from "@/components/ProjectImage";
+import DocuGraphTeam from "@/components/DocuGraphTeam";
+import CardInteractionHint from "@/components/CardInteractionHint";
+import { savePortfolioReturn } from "@/lib/portfolioNavigation";
 
 export default function ProjectShowcase() {
   const [selected, setSelected] = useState<Project | null>(null);
@@ -16,6 +19,7 @@ export default function ProjectShowcase() {
       <section
         id="projects"
         data-bg="#070d20"
+        data-bg-light="#e9f0fa"
         className="relative z-10 py-20 sm:py-28 lg:py-32"
       >
         <div className="mx-auto max-w-6xl px-5">
@@ -24,7 +28,12 @@ export default function ProjectShowcase() {
             <h2 className="h2">Selected work.</h2>
           </div>
         </div>
-        <div data-hscroll role="region" aria-label="Featured projects">
+        <div
+          data-hscroll
+          className="is-scroll-layout"
+          role="region"
+          aria-label="Featured projects"
+        >
           <div
             data-project-track
             className="grid grid-cols-[minmax(0,1fr)] gap-4 px-5 pb-3 sm:gap-6 sm:pb-8 lg:px-12"
@@ -32,28 +41,41 @@ export default function ProjectShowcase() {
             {projects.map((project, index) => (
               <Tilt
                 key={project.id}
-                className={`h-full shrink-0 rounded-2xl ${
-                  project.flagship
-                    ? "[width:min(88vw,44rem)]"
-                    : "[width:min(85vw,30rem)]"
-                }`}
+                className="project-card-shell flex w-[min(86vw,36rem)] shrink-0 rounded-2xl"
               >
                 <article
                   data-project-card
                   data-flagship={project.flagship || undefined}
-                  className={`group flex h-full w-full min-w-0 flex-col gap-2.5 rounded-2xl border p-2.5 sm:gap-6 sm:p-6 ${
+                  className={`group relative flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border ${
                     project.flagship
                       ? "border-cyan/50 bg-gradient-to-br from-electric/20 to-violet/15"
                       : "border-white/10 bg-charcoal/60"
                   }`}
                 >
-                  <ProjectImage project={project} compact />
-                  <div className="flex flex-1 flex-col">
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      setSelected(project);
+                      setPreviewSource(event.currentTarget);
+                    }}
+                    aria-label={`Open ${project.name} project overview`}
+                    aria-haspopup="dialog"
+                    className="absolute inset-0 z-10 cursor-pointer rounded-2xl focus-visible:outline-cyan"
+                  >
+                    <CardInteractionHint className="bottom-[3.75rem] right-3 sm:bottom-16 sm:right-5" />
+                  </button>
+                  <div className="pointer-events-none relative flex min-h-0 flex-1 flex-col gap-2.5 p-3 sm:gap-4 sm:p-5">
+                    <ProjectImage
+                      project={project}
+                      compact
+                      preload={project.id === "docugraph"}
+                    />
+                    <div className="flex flex-1 flex-col">
                     <p className="eyebrow">
                       {String(index + 1).padStart(2, "0")}
                       {project.flagship && " · Flagship"}
                     </p>
-                    <h3 className="mt-1 font-display text-base font-bold leading-tight sm:mt-2 sm:text-3xl">
+                    <h3 className="mt-1 font-display text-base font-bold leading-tight sm:mt-2 sm:text-2xl">
                       {project.name}
                     </h3>
                     <p className="mt-1 text-xs leading-4 text-violet sm:text-base sm:leading-normal">
@@ -81,45 +103,46 @@ export default function ProjectShowcase() {
                         Technology details not confirmed
                       </p>
                     )}
-                    <div className="mt-auto flex flex-wrap gap-x-3 gap-y-2 pt-2 text-[11px] sm:gap-4 sm:pt-5 sm:text-sm">
-                      <button
-                        type="button"
-                        onClick={(event) => {
-                          setSelected(project);
-                          setPreviewSource(event.currentTarget);
-                        }}
-                        className="holo-link min-h-10 rounded-full border border-cyan/35 px-3 py-2 font-medium text-cyan hover:border-cyan sm:px-4"
-                        aria-label={`Open overview for ${project.name}`}
-                      >
-                        Quick view
-                      </button>
-                      <Link
-                        href={`/projects/${project.id}`}
-                        className="holo-link font-medium text-cyan hover:underline"
-                      >
-                        Case study →
-                      </Link>
-                      {project.demo && (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="holo-link text-white/70 hover:text-cyan"
-                        >
-                          Live demo
-                        </a>
-                      )}
-                      {project.repo && (
-                        <a
-                          href={project.repo}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="holo-link text-white/70 hover:text-cyan"
-                        >
-                          GitHub
-                        </a>
-                      )}
                     </div>
+                  </div>
+                  <div className="relative z-20 flex min-h-12 flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/10 px-3 py-2 text-[11px] sm:gap-x-5 sm:px-6 sm:text-sm">
+                    <Link
+                      href={`/projects/${project.id}`}
+                      onClick={(event) => {
+                        if (
+                          event.button === 0 &&
+                          !event.metaKey &&
+                          !event.ctrlKey &&
+                          !event.shiftKey &&
+                          !event.altKey
+                        ) {
+                          savePortfolioReturn(project.id);
+                        }
+                      }}
+                      className="holo-link font-medium text-cyan hover:underline"
+                    >
+                      Full case study →
+                    </Link>
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="holo-link text-white/70 hover:text-cyan"
+                      >
+                        Live demo
+                      </a>
+                    )}
+                    {project.repo && (
+                      <a
+                        href={project.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="holo-link text-white/70 hover:text-cyan"
+                      >
+                        GitHub
+                      </a>
+                    )}
                   </div>
                 </article>
               </Tilt>
@@ -137,7 +160,7 @@ export default function ProjectShowcase() {
       >
         {selected && (
           <div>
-            <div className="border-b border-white/10 bg-[#090f20] p-2 sm:p-6">
+            <div className="theme-image-frame border-b border-white/10 bg-[#090f20] p-2 sm:p-6">
               <ProjectImage project={selected} preview />
             </div>
             <div className="p-4 sm:p-10">
@@ -186,9 +209,45 @@ export default function ProjectShowcase() {
                   </ul>
                 </div>
               )}
+              {selected.id === "docugraph" && <DocuGraphTeam />}
+              {selected.id === "mayari" && (
+                <DocuGraphTeam
+                  projectName="Mayari"
+                  teamName="Computahhh"
+                  membersTitle="Computahhh groupmates"
+                  members={[
+                    "Allen Calayan",
+                    "Franchesca Castillo",
+                    "Joaquin Franco Centeno",
+                    "Lenj Jesther Magsino",
+                    "Grant Gabrielle Ostol",
+                  ]}
+                  groupPhoto={{
+                    src: "/images/projects/mayari/team-computahhh.jpg",
+                    alt: "Mayari teammates from Computahhh gathered together for a group photo.",
+                    label: "Computahhh",
+                    width: 1024,
+                    height: 768,
+                  }}
+                  rolePhotos={[]}
+                  subtitle="Meet the Computahhh teammates behind Mayari, our Canvas LMS companion built through shared ideas, development, and teamwork."
+                  collaboration="Mayari was built by Computahhh through teamwork, shared research, and a common goal of making course deadlines easier to manage."
+                />
+              )}
               <div className="mt-6 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
                 <Link
                   href={`/projects/${selected.id}`}
+                  onClick={(event) => {
+                    if (
+                      event.button === 0 &&
+                      !event.metaKey &&
+                      !event.ctrlKey &&
+                      !event.shiftKey &&
+                      !event.altKey
+                    ) {
+                      savePortfolioReturn(selected.id);
+                    }
+                  }}
                   className="holo-link inline-flex min-h-11 items-center rounded-full border border-cyan/40 px-4 py-2.5 text-sm text-cyan sm:px-5 sm:py-3"
                 >
                   Full case study →

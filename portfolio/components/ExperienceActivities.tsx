@@ -5,6 +5,7 @@ export default function ExperienceActivities() {
     <section
       id="activities"
       data-bg="#0a1330"
+      data-bg-light="#eaf1fa"
       className="relative z-10 overflow-hidden px-5 py-20 sm:py-28 lg:py-32"
     >
       <div
@@ -31,7 +32,7 @@ export default function ExperienceActivities() {
                 sizes="(max-width: 768px) 55vw, 32vw"
                 className="object-contain"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight/90 to-transparent px-3 pb-2 pt-6 font-mono text-[10px] text-white/80">
+              <figcaption className="theme-image-caption absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight/90 to-transparent px-3 pb-2 pt-6 font-mono text-[10px] text-white/80">
                 Hackathon
               </figcaption>
             </figure>
@@ -43,7 +44,7 @@ export default function ExperienceActivities() {
                 sizes="(max-width: 639px) 100vw, (max-width: 768px) 45vw, 25vw"
                 className="object-contain object-center"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight/90 to-transparent px-3 pb-2 pt-6 font-mono text-[10px] text-white/80">
+              <figcaption className="theme-image-caption absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight/90 to-transparent px-3 pb-2 pt-6 font-mono text-[10px] text-white/80">
                 With fellow participants
               </figcaption>
             </figure>
