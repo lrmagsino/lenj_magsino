@@ -14,6 +14,7 @@ const CODE_SYMBOLS = [
   { value: "async", left: "86%", top: "47%" },
   { value: "[ ]", left: "11%", top: "47%" },
 ];
+const REVEALED_NAME_HOLD_SECONDS = 4;
 
 export default function PortfolioIntro() {
   const { phase, initialized, beginIntroExit, enterMain } = useExperience();
@@ -127,7 +128,7 @@ export default function PortfolioIntro() {
         {
           rotation: 8,
           scale: 1.025,
-          duration: 2.5,
+          duration: REVEALED_NAME_HOLD_SECONDS,
           ease: "sine.inOut",
         },
         "+=0",
@@ -137,7 +138,7 @@ export default function PortfolioIntro() {
         {
           opacity: 0.38,
           scale: 1.04,
-          duration: 1.25,
+          duration: REVEALED_NAME_HOLD_SECONDS / 2,
           ease: "sine.inOut",
           yoyo: true,
           repeat: 1,
