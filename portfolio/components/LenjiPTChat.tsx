@@ -70,7 +70,7 @@ export default function LenjiPTChat({
   };
 
   return (
-    <div className="theme-aware-content overflow-hidden rounded-2xl border border-cyan/25 bg-charcoal/80 shadow-[0_24px_70px_-42px_rgba(47,107,255,.55)]">
+    <div data-city-panel className="theme-aware-content overflow-hidden rounded-2xl border border-cyan/25 bg-charcoal/80 shadow-[0_24px_70px_-42px_rgba(47,107,255,.55)]">
       <header className="flex items-center justify-between gap-4 border-b border-white/10 bg-gradient-to-r from-cyan/[0.06] via-transparent to-electric/[0.06] px-4 py-4 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
           <LenjiPTAvatar />

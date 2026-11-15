@@ -6,39 +6,6 @@ import { links, profile } from "@/lib/content";
 import { useExperience } from "@/components/Experience";
 import { motion } from "@/lib/motion";
 
-const N: [number, number][] = [
-  [8, 10],
-  [52, 4],
-  [92, 14],
-  [20, 40],
-  [70, 36],
-  [96, 52],
-  [10, 72],
-  [46, 64],
-  [84, 80],
-  [40, 94],
-];
-const L = [
-  [0, 1],
-  [1, 2],
-  [0, 3],
-  [1, 3],
-  [1, 4],
-  [2, 4],
-  [2, 5],
-  [3, 4],
-  [3, 6],
-  [3, 7],
-  [4, 7],
-  [4, 5],
-  [5, 8],
-  [6, 7],
-  [7, 8],
-  [7, 9],
-  [8, 9],
-  [6, 9],
-];
-
 const Win = ({
   title,
   lines,
@@ -58,7 +25,7 @@ const Win = ({
     <div data-m={mouseDepth}>
       <div data-win>
         <div
-          className="float rounded-xl border border-violet/30 bg-charcoal/80 shadow-[0_0_60px_-12px_#2F6BFF66] backdrop-blur-sm"
+          className="float rounded-xl border border-cyan/35 bg-charcoal/80 shadow-[0_18px_48px_-30px_rgba(64,201,255,.55)] backdrop-blur-sm"
           style={{ animationDelay: delay }}
         >
           <div className="flex items-center gap-1.5 border-b border-white/10 px-3 py-2">
@@ -139,43 +106,26 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
   }, [phase, markReady]);
 
   return (
-    <section id="home" ref={root} className="relative z-10 flex min-h-dvh items-center overflow-hidden">
+    <section id="home" ref={root} data-city-district="hero" className="blue-future-hero relative z-10 flex min-h-dvh items-center overflow-hidden">
       <div
         aria-hidden="true"
         className="hero-atmosphere absolute inset-0"
       />
-      <svg aria-hidden="true" className="absolute inset-0 h-full w-full opacity-40" data-depth="0.08">
-        <defs>
-          <pattern id="hero-grid" width="56" height="56" patternUnits="userSpaceOnUse">
-            <path d="M56 0H0V56" fill="none" stroke="var(--color-electric)" strokeOpacity=".18" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#hero-grid)" />
-      </svg>
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-full lg:w-[55%]">
         <div data-mesh data-depth="0.12" className="absolute inset-[6%]">
           <div data-m="14" className="absolute inset-0 opacity-[0.55] lg:opacity-100">
             <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <g className="pulse" stroke="var(--color-cyan)" strokeOpacity=".28" fill="none">
-                {L.map(([start, end]) => (
-                  <line
-                    key={`${start}-${end}`}
-                    x1={N[start][0]}
-                    y1={N[start][1]}
-                    x2={N[end][0]}
-                    y2={N[end][1]}
-                    vectorEffect="non-scaling-stroke"
-                  />
-                ))}
+              <g fill="none" stroke="var(--city-edge)" strokeWidth=".22">
+                <path d="M2 62 C25 44 38 47 54 34 S80 19 98 27" strokeDasharray="1 1.8" />
+                <path d="M4 68 C28 50 40 53 57 40 S82 25 99 32" strokeOpacity=".5" />
+                <path d="M12 17v18h12m60 45V63h12" />
+              </g>
+              <g fill="var(--city-glow)">
+                <circle cx="54" cy="34" r=".7" />
+                <circle cx="81" cy="24" r=".55" />
+                <circle cx="23" cy="53" r=".45" />
               </g>
             </svg>
-            {N.map(([x, y], index) => (
-              <i
-                key={index}
-                className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan shadow-[0_0_12px_#3CE0F0]"
-                style={{ left: `${x}%`, top: `${y}%` }}
-              />
-            ))}
           </div>
         </div>
         <div>
@@ -197,7 +147,7 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
             depth="0.32"
             mouseDepth="34"
             delay="2s"
-            className="hero-code-mobile bottom-[3%] right-[2%] w-[56%] max-w-64 sm:bottom-[4%] sm:right-[6%] sm:w-[48%] lg:bottom-auto lg:right-[4%] lg:top-[44%] lg:w-[50%] lg:max-w-none"
+            className="hero-code-mobile bottom-[3%] left-[2%] w-[56%] max-w-64 sm:bottom-[4%] sm:left-[6%] sm:w-[48%] lg:bottom-auto lg:left-auto lg:right-[4%] lg:top-[44%] lg:w-[50%] lg:max-w-none"
             lines={[
               ["SELECT ", "title, layout", ""],
               ["FROM ", "documents", ""],
@@ -216,25 +166,25 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
             ]}
           />
         </div>
-        <span data-depth="0.5" className="absolute bottom-[5%] right-[6%] font-mono text-xl text-electric/40">
-          {"{ ai: true }"}
+        <span data-depth="0.5" className="absolute bottom-[5%] right-[6%] font-mono text-xl text-cyan/70">
+          {"{ ai: love }"}
         </span>
-        <span data-depth="0.45" className="absolute right-[8%] top-[10%] font-mono text-xl text-violet/40 lg:right-[40%]">
+        <span data-depth="0.45" className="absolute right-[8%] top-[10%] font-mono text-xl text-cyan/65 lg:right-[40%]">
           {"</>"}
         </span>
       </div>
       <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-24 sm:py-28">
-        <p className="eyebrow mb-4 max-w-full overflow-hidden text-[10px] leading-relaxed sm:text-xs">
+        <p className="blue-future-kicker eyebrow mb-4 max-w-full overflow-hidden text-[10px] leading-relaxed sm:text-xs">
           <span data-h className="inline-block">{profile.headline}</span>
         </p>
         <h1 className="font-display text-[clamp(2.1rem,9vw,6.5rem)] font-extrabold leading-[.97] tracking-[-0.04em]">
           {["LENJ JESTHER", "R. MAGSINO"].map((word) => (
             <span key={word} className="block overflow-hidden">
-              <span data-h className="block bg-gradient-to-r from-white to-cyan bg-clip-text text-transparent">{word}</span>
+              <span data-h className="blue-future-name block bg-gradient-to-r from-white via-cyan to-white bg-clip-text text-transparent">{word}</span>
             </span>
           ))}
         </h1>
-        <p className="mt-5 max-w-lg overflow-hidden text-balance text-base leading-relaxed text-white/75 sm:mt-6 sm:text-lg">
+        <p className="blue-future-tagline mt-5 max-w-lg overflow-hidden text-balance text-base leading-relaxed text-white/75 sm:mt-6 sm:text-lg">
           <span data-h className="block">{profile.tagline}</span>
         </p>
         <div className="mt-7 flex flex-wrap gap-3 sm:mt-8">

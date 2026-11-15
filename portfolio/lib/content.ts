@@ -30,6 +30,7 @@ export type Project = {
   id: string;
   name: string;
   fullTitle?: string;
+  video?: string;
   flagship?: boolean;
   tag: string;
   desc: string;
@@ -48,6 +49,7 @@ export const projects: Project[] = [
   {
     id: "docugraph",
     name: "DocuGraph",
+    video: "/videos/docugraph-loop.mp4",
     fullTitle:
       "DocuGraph: Graph-Based Document Layout Analysis Enhancing OCR for Researchers and Institutions",
     flagship: true,
@@ -92,6 +94,7 @@ export const projects: Project[] = [
   {
     id: "mayari",
     name: "Mayari",
+    video: "/videos/mayari-loop.mp4",
     tag: "Canvas LMS deadline and study companion",
     desc: "A Chrome extension for tracking Canvas assignments, due dates, course updates, and class information in one dashboard.",
     stack: [
@@ -130,6 +133,7 @@ export const projects: Project[] = [
   {
     id: "red-warriors",
     name: "Red Warriors Advanced Ordering System & Point of Sale",
+    video: "/videos/red-warriors-loop.mp4",
     tag: "Two independent Android prototypes for canteen ordering and operations",
     desc: "A customer-facing Advanced Ordering System prototype and a separate canteen-side Point of Sale navigation prototype, reviewed against their recovered Java and XML source.",
     stack: [
@@ -168,6 +172,7 @@ export const projects: Project[] = [
   {
     id: "cs-expo-2026",
     name: "CS Expo 2026 — Mission: Tomorrow",
+    video: "/videos/cs-expo-loop.mp4",
     tag: "FEU Tech Computer Science · Neostalgia",
     desc: "The event platform for FEU Tech's annual Computer Science capstone showcase. Its first production release includes the schedule, speakers, sponsors, publications, and admin CMS; other sections remain browser-only demos hidden by the production release gate.",
     stack: [
@@ -213,6 +218,7 @@ export const projects: Project[] = [
   {
     id: "wedding",
     name: "Fritz & Princess — Interactive Wedding Invitation Website",
+    video: "/videos/wedding-loop.mp4",
     tag: "A travel-inspired digital invitation",
     desc: "A responsive wedding website with a personalized invitation, journey-themed visuals, a story timeline, event details, and an RSVP form.",
     stack: [

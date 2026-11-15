@@ -249,7 +249,7 @@ export default function GitHubActivity() {
                       href={repository.html_url}
                       target="_blank"
                       rel="noreferrer"
-                      className="holo-link font-medium text-white hover:text-cyan"
+                      className="holo-link font-medium text-text-primary hover:text-cyan"
                     >
                       {repository.name} ↗
                     </a>

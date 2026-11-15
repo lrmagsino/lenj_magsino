@@ -6,6 +6,7 @@ export default function LenjiPTSection() {
   return (
     <section
       id="lenjipt"
+      data-city-district="command"
       data-bg="#0b142d"
       data-bg-light="#eef3fa"
       className="relative z-10 isolate overflow-hidden px-5 py-20 sm:py-28 lg:py-32"

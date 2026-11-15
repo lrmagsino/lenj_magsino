@@ -180,7 +180,7 @@ export default function CinematicDialog({
         closingRef.current = false;
         onCloseRef.current();
       }}
-      className="cinematic-dialog theme-dialog m-auto max-h-[90vh] max-h-[90dvh] w-[min(94vw,72rem)] max-w-none overflow-x-hidden overflow-y-auto rounded-2xl border border-cyan/25 bg-charcoal p-0 text-white shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md sm:max-h-[94vh] sm:max-h-[94dvh] sm:w-[min(96vw,72rem)]"
+      className="cinematic-dialog theme-dialog theme-aware-content m-auto max-h-[90vh] max-h-[90dvh] w-[min(94vw,72rem)] max-w-none overflow-x-hidden overflow-y-auto rounded-2xl border border-cyan/25 bg-charcoal p-0 text-text-primary shadow-[0_30px_120px_-30px_#2f6bff88] backdrop:bg-midnight/80 backdrop:backdrop-blur-md sm:max-h-[94vh] sm:max-h-[94dvh] sm:w-[min(96vw,72rem)]"
     >
       <div
         ref={panelRef}
@@ -191,7 +191,7 @@ export default function CinematicDialog({
           autoFocus
           onClick={finishClose}
           aria-label="Close preview"
-          className="sticky top-3 z-20 ml-auto mr-3 mt-3 -mb-11 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-midnight/90 text-2xl text-white transition hover:border-cyan hover:text-cyan"
+          className="sticky top-3 z-20 ml-auto mr-3 mt-3 -mb-11 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-midnight/90 text-2xl text-text-primary transition hover:border-cyan hover:text-cyan"
         >
           <span aria-hidden="true">×</span>
         </button>

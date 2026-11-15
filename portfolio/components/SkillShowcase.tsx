@@ -28,6 +28,7 @@ export default function SkillShowcase() {
     <>
       <section
         id="skills"
+        data-city-district="technology"
         data-bg="#11182A"
         data-bg-light="#edf3fa"
         className="relative z-10 overflow-hidden px-5 py-20 sm:py-28 lg:py-32"

@@ -87,7 +87,7 @@ export default function DeveloperJourney() {
               }`}
             >
               <span className="font-mono text-sm text-cyan">{milestone.period}</span>
-              <span className="mt-2 block font-display text-sm font-semibold text-white">
+              <span className="mt-2 block font-display text-sm font-semibold text-text-primary">
                 {milestone.title}
               </span>
             </button>

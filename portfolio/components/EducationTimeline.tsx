@@ -16,6 +16,7 @@ export default function EducationTimeline() {
   return (
     <section
       id="education"
+      data-city-district="academic"
       data-bg="#11182A"
       data-bg-light="#f3f6fb"
       className="relative z-10 isolate overflow-hidden px-5 py-20 sm:py-28 lg:py-32"
@@ -60,7 +61,7 @@ export default function EducationTimeline() {
                     : "md:col-start-1 md:row-start-1"
                 }`}
               >
-                <div className="group relative flex min-w-0 flex-col items-start gap-4 rounded-2xl border border-white/10 bg-charcoal/75 p-4 pb-16 shadow-[0_20px_60px_-35px_#2F6BFF88] min-[480px]:flex-row min-[480px]:items-center min-[480px]:p-5 min-[480px]:pb-16 sm:gap-5 sm:p-7 sm:pb-16">
+                <div data-city-panel className="group relative flex min-w-0 flex-col items-start gap-4 rounded-2xl border border-white/10 bg-charcoal/75 p-4 pb-16 shadow-[0_20px_60px_-35px_#2F6BFF88] min-[480px]:flex-row min-[480px]:items-center min-[480px]:p-5 min-[480px]:pb-16 sm:gap-5 sm:p-7 sm:pb-16">
                   <button
                     type="button"
                     onClick={(event) => {

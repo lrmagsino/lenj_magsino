@@ -4,6 +4,7 @@ export default function ExperienceActivities() {
   return (
     <section
       id="activities"
+      data-city-district="academic"
       data-bg="#0a1330"
       data-bg-light="#eaf1fa"
       className="relative z-10 overflow-hidden px-5 py-20 sm:py-28 lg:py-32"

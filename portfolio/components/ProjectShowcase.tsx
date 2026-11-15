@@ -13,11 +13,15 @@ import { savePortfolioReturn } from "@/lib/portfolioNavigation";
 export default function ProjectShowcase() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [previewSource, setPreviewSource] = useState<HTMLElement | null>(null);
+  const [hoveredProjectNumber, setHoveredProjectNumber] = useState<number | null>(
+    null,
+  );
 
   return (
     <>
       <section
         id="projects"
+        data-city-district="exhibition"
         data-bg="#070d20"
         data-bg-light="#e9f0fa"
         className="relative z-10 py-20 sm:py-28 lg:py-32"
@@ -45,7 +49,20 @@ export default function ProjectShowcase() {
               >
                 <article
                   data-project-card
+                  data-city-panel
                   data-flagship={project.flagship || undefined}
+                  onPointerEnter={(event) => {
+                    if (event.pointerType === "mouse") {
+                      setHoveredProjectNumber(index + 1);
+                    }
+                  }}
+                  onPointerLeave={(event) => {
+                    if (event.pointerType === "mouse") {
+                      setHoveredProjectNumber((current) =>
+                        current === index + 1 ? null : current,
+                      );
+                    }
+                  }}
                   className={`group relative flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border ${
                     project.flagship
                       ? "border-cyan/50 bg-gradient-to-br from-electric/20 to-violet/15"
@@ -70,6 +87,8 @@ export default function ProjectShowcase() {
                       source="cover"
                       compact
                       preload={project.id === "docugraph"}
+                      videoProjectNumber={index + 1}
+                      isHovered={hoveredProjectNumber === index + 1}
                     />
                     <div data-project-card-details className="min-h-0 flex flex-1 flex-col">
                     <p className="eyebrow">

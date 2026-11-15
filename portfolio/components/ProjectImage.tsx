@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Project } from "@/lib/content";
+import ProjectPreviewVideo from "@/components/ProjectPreviewVideo";
 
 export default function ProjectImage({
   project,
@@ -7,12 +8,16 @@ export default function ProjectImage({
   compact = false,
   preview = false,
   preload = false,
+  videoProjectNumber,
+  isHovered = false,
 }: {
-  project: Pick<Project, "cover" | "image">;
+  project: Pick<Project, "cover" | "image" | "video" | "name">;
   source?: "cover" | "screenshot";
   compact?: boolean;
   preview?: boolean;
   preload?: boolean;
+  videoProjectNumber?: number;
+  isHovered?: boolean;
 }) {
   const image = source === "cover" ? project.cover : project.image;
   const aspectRatio =
@@ -54,6 +59,15 @@ export default function ProjectImage({
             {...(preload ? { preload: true } : { loading: "lazy" as const })}
             className="h-full w-full object-contain"
           />
+          {source === "cover" && project.video && videoProjectNumber ? (
+            <ProjectPreviewVideo
+              src={project.video}
+              poster={project.cover.src}
+              projectNumber={videoProjectNumber}
+              projectName={project.name}
+              isHovered={isHovered}
+            />
+          ) : null}
         </div>
       </div>
       <figcaption

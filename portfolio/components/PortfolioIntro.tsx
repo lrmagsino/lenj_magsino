@@ -14,11 +14,12 @@ const CODE_SYMBOLS = [
   { value: "async", left: "86%", top: "47%" },
   { value: "[ ]", left: "11%", top: "47%" },
 ];
-const REVEALED_NAME_HOLD_SECONDS = 2.5;
+const REVEALED_NAME_HOLD_SECONDS = 0.65;
 
 export default function PortfolioIntro() {
   const { phase, initialized, beginIntroExit, enterMain } = useExperience();
-  const visible = phase === "intro" || phase === "intro-exiting";
+  const visible =
+    initialized && (phase === "intro" || phase === "intro-exiting");
   const rootRef = useRef<HTMLDivElement>(null);
   const skipButtonRef = useRef<HTMLButtonElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -145,6 +146,17 @@ export default function PortfolioIntro() {
         },
         "<",
       );
+    timeline
+      .to(
+        nameLines,
+        { scale: 1.015, duration: 0.26, ease: "power2.out" },
+        "<",
+      )
+      .to(
+        nameLines,
+        { scale: 1, duration: 0.34, ease: "power2.inOut" },
+        ">-0.08",
+      );
 
     return () => {
       timeline.kill();
@@ -191,10 +203,10 @@ export default function PortfolioIntro() {
           beginIntroExit();
         }
       }}
-      className="portfolio-intro fixed inset-0 z-[100] grid min-h-dvh place-items-center overflow-hidden overscroll-none bg-[#050B1A]/80 px-4 py-16 text-center backdrop-blur-[2px] touch-none sm:px-5 sm:py-12"
+      className="portfolio-intro fixed inset-0 z-[100] grid min-h-dvh place-items-center overflow-hidden overscroll-none bg-[#050B1A]/72 px-4 py-16 text-center backdrop-blur-[2px] touch-none sm:px-5 sm:py-12"
       style={{
         backgroundImage:
-          "radial-gradient(ellipse at 50% 45%, rgba(47,107,255,.2), transparent 48%), radial-gradient(ellipse at 18% 82%, rgba(139,124,246,.12), transparent 36%)",
+          "radial-gradient(ellipse at 50% 45%, rgba(64,201,255,.18), transparent 48%), radial-gradient(ellipse at 18% 82%, rgba(37,99,235,.12), transparent 36%)",
       }}
     >
       <div

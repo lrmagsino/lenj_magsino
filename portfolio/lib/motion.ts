@@ -1,4 +1,14 @@
 export const motion = {
+  world: {
+    desktopScale: 1.62,
+    mobileScale: 1.46,
+    desktopX: -0.035,
+    mobileX: -0.03,
+    desktopY: 0.035,
+    mobileY: 0.018,
+    desktopOrigin: "68% 48%",
+    mobileOrigin: "78% 50%",
+  },
   cinematic: {
     heroDuration: 1.1,
     heroEase: "power4.out",

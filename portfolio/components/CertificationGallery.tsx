@@ -113,6 +113,7 @@ function CertificationCard({
   return (
     <Tilt className="rounded-2xl">
       <article
+        data-city-panel
         className="certification-card fixed-dark-surface group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-charcoal transition duration-300 hover:-translate-y-1 hover:border-cyan/35 hover:shadow-[0_24px_70px_-36px_#2F6BFF88]"
         style={{ animationDelay: `${Math.min(index, 7) * 55}ms` }}
       >
@@ -349,6 +350,7 @@ export default function CertificationGallery() {
   return (
     <section
       id="certifications"
+      data-city-district="archive"
       data-bg="#0a1330"
       data-bg-light="#eaf1fa"
       className="relative z-10 isolate overflow-hidden px-5 py-20 sm:py-28 lg:py-32"

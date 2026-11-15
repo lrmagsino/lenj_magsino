@@ -4,9 +4,24 @@ import { profile } from "@/lib/content";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
-const jb = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jb" });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+});
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+  display: "swap",
+  preload: true,
+});
+const jb = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jb",
+  display: "swap",
+  preload: true,
+});
 
 export const metadata: Metadata = {
   title: `${profile.name} — Full-Stack Developer`,
