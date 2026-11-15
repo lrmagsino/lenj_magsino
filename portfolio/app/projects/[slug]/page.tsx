@@ -2,9 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import EngineeringChallenges from "@/components/EngineeringChallenges";
-import DocuGraphResearchLab from "@/components/DocuGraphResearchLab";
 import PortfolioReturnLink from "@/components/PortfolioReturnLink";
 import ProjectImage from "@/components/ProjectImage";
+import ProjectDemo from "@/components/demos/ProjectDemo";
 import RedWarriorsExplorer from "@/components/RedWarriorsExplorer";
 import { projects } from "@/lib/content";
 
@@ -48,7 +48,7 @@ export default async function Page({ params }: PageProps) {
   const nextProject = projects[(index + 1) % projects.length];
 
   return (
-    <main className="mx-auto max-w-6xl px-5 py-16">
+    <main className="theme-aware-content mx-auto max-w-6xl px-5 py-16">
       <PortfolioReturnLink />
       <p className="eyebrow mt-10">
         {project.flagship ? "Flagship case study" : "Case study"}
@@ -63,11 +63,8 @@ export default async function Page({ params }: PageProps) {
       <p className="mt-4 max-w-2xl text-white/70">{project.desc}</p>
 
       <div className="mt-10">
-        <ProjectImage project={project} />
+        <ProjectImage project={project} preload />
       </div>
-
-      {project.id === "docugraph" && <DocuGraphResearchLab />}
-      {project.id === "red-warriors" && <RedWarriorsExplorer />}
 
       <CaseStudySection heading="Problem" content={project.problem} />
       <CaseStudySection heading="My role" content={project.role} />
@@ -81,7 +78,7 @@ export default async function Page({ params }: PageProps) {
             {project.stack.map((technology) => (
               <li
                 key={technology}
-                className="rounded-md border border-electric/30 px-3 py-1.5"
+                className="technology-chip rounded-md border border-electric/30 px-3 py-1.5"
               >
                 {technology}
               </li>
@@ -94,12 +91,34 @@ export default async function Page({ params }: PageProps) {
         )}
       </section>
 
+      <section
+        aria-labelledby="project-demo-title"
+        className="mt-14 scroll-mt-24"
+      >
+        <p className="eyebrow">Interactive portfolio demonstration</p>
+        <h2
+          id="project-demo-title"
+          className="mt-2 font-display text-3xl font-bold sm:text-4xl"
+        >
+          Try the experience.
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/70 sm:text-base">
+          Interact with a browser-based demonstration of this project’s documented workflows.
+          Demo data stays in this page; no real accounts, production systems, or transactions are used.
+        </p>
+        <div className="mt-6">
+          <ProjectDemo projectId={project.id} />
+        </div>
+      </section>
+
+      {project.id === "red-warriors" && <RedWarriorsExplorer />}
+
       <CaseStudySection heading="Outcome" content={project.outcome} />
 
       <div className="mt-12 flex flex-wrap gap-4">
         {project.demo && (
           <a
-            className="rounded-full bg-electric px-6 py-3"
+            className="rounded-full bg-electric px-6 py-3 text-text-on-accent"
             href={project.demo}
             target="_blank"
             rel="noreferrer"

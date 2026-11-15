@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { links, profile } from "@/lib/content";
 import { useExperience } from "@/components/Experience";
+import { motion } from "@/lib/motion";
 
 const N: [number, number][] = [
   [8, 10],
@@ -66,7 +67,7 @@ const Win = ({
             <i className="h-2 w-2 rounded-full bg-electric" />
             <span className="ml-2 font-mono text-[10px] text-white/40">{title}</span>
           </div>
-          <pre className="p-3 font-mono text-[11px] leading-5">
+          <pre className="p-2 font-mono text-[10px] leading-[1.125rem] sm:p-2.5 lg:p-3 lg:text-[11px] lg:leading-5">
             {lines.map((line, index) => (
               <span key={index} className="block">
                 <span className="text-violet">{line[0]}</span>
@@ -102,9 +103,9 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
         .from("[data-h]", {
           yPercent: 110,
           opacity: 0,
-          stagger: 0.12,
-          duration: 1.1,
-          ease: "power4.out",
+          stagger: motion.cinematic.heroStagger,
+          duration: motion.cinematic.heroDuration,
+          ease: motion.cinematic.heroEase,
         })
         .from(
           "[data-win]",
@@ -151,9 +152,9 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
         </defs>
         <rect width="100%" height="100%" fill="url(#hero-grid)" />
       </svg>
-      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-full opacity-40 lg:w-[55%] lg:opacity-100">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-full lg:w-[55%]">
         <div data-mesh data-depth="0.12" className="absolute inset-[6%]">
-          <div data-m="14" className="absolute inset-0">
+          <div data-m="14" className="absolute inset-0 opacity-[0.55] lg:opacity-100">
             <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               <g className="pulse" stroke="var(--color-cyan)" strokeOpacity=".28" fill="none">
                 {L.map(([start, end]) => (
@@ -177,13 +178,13 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
             ))}
           </div>
         </div>
-        <div className="hidden lg:block">
+        <div>
           <Win
             title="pipeline.ts"
             depth="0.2"
             mouseDepth="24"
             delay="0s"
-            className="left-[12%] top-[16%] w-[58%]"
+            className="hero-code-mobile left-[40%] top-[15%] max-[359px]:top-[14%] w-[58%] max-w-64 sm:left-[43%] sm:top-[20%] sm:w-[54%] lg:left-[12%] lg:top-[16%] lg:w-[58%] lg:max-w-none"
             lines={[
               ["const ", "build", " = async () => {"],
               ["  const ", "docs", " = await scan();"],
@@ -196,7 +197,7 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
             depth="0.32"
             mouseDepth="34"
             delay="2s"
-            className="right-[4%] top-[44%] w-[50%]"
+            className="hero-code-mobile bottom-[3%] right-[2%] w-[56%] max-w-64 sm:bottom-[4%] sm:right-[6%] sm:w-[48%] lg:bottom-auto lg:right-[4%] lg:top-[44%] lg:w-[50%] lg:max-w-none"
             lines={[
               ["SELECT ", "title, layout", ""],
               ["FROM ", "documents", ""],
@@ -208,7 +209,7 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
             depth="0.14"
             mouseDepth="18"
             delay="4s"
-            className="left-[22%] bottom-[8%] w-[44%]"
+            className="hidden left-[22%] bottom-[8%] w-[44%] lg:block"
             lines={[
               ["def ", "predict", "(x):"],
               ["  return ", "model", "(x)"],
@@ -237,7 +238,7 @@ export default function Hero({ resumeAvailable }: { resumeAvailable: boolean }) 
           <span data-h className="block">{profile.tagline}</span>
         </p>
         <div className="mt-7 flex flex-wrap gap-3 sm:mt-8">
-          <a href="#projects" className="holo-link inline-flex min-h-11 items-center rounded-full bg-electric px-5 py-3 text-sm font-medium hover:bg-electric/80 sm:px-6 sm:text-base">Explore My Work</a>
+          <a href="#projects" className="holo-link inline-flex min-h-11 items-center rounded-full bg-electric px-5 py-3 text-sm font-medium text-text-on-accent hover:bg-electric/80 sm:px-6 sm:text-base">Explore My Work</a>
           {resumeAvailable ? (
             <a href={links.resume} download className="holo-link inline-flex min-h-11 items-center rounded-full border border-white/25 px-5 py-3 text-sm hover:border-cyan hover:text-cyan sm:px-6 sm:text-base">Download Résumé</a>
           ) : (

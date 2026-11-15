@@ -22,7 +22,7 @@ export default function RecruiterPage() {
   );
 
   return (
-    <main id="main" className="mx-auto max-w-6xl px-5 pb-16 pt-8 sm:pt-12">
+    <main id="main" className="theme-aware-content mx-auto max-w-6xl px-5 pb-16 pt-8 sm:pt-12">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <Link href="/" className="holo-link min-h-11 inline-flex items-center text-sm text-cyan hover:underline">
           ← Portfolio home
@@ -43,7 +43,7 @@ export default function RecruiterPage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <a
             href={links.email}
-            className="holo-link inline-flex min-h-11 items-center rounded-full bg-electric px-5 text-sm font-medium"
+            className="holo-link inline-flex min-h-11 items-center rounded-full bg-electric px-5 text-sm font-medium text-text-on-accent"
           >
             Contact me
           </a>

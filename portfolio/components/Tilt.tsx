@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import type { PointerEvent, ReactNode } from "react";
+import { motion } from "@/lib/motion";
 
 export default function Tilt({
   children,
@@ -50,7 +51,7 @@ export default function Tilt({
         const y = (event.clientY - bounds.top) / bounds.height;
         event.currentTarget.style.setProperty("--pointer-x", `${x * 100}%`);
         event.currentTarget.style.setProperty("--pointer-y", `${y * 100}%`);
-        cardRef.current.style.transform = `rotateY(${(x - 0.5) * 8}deg) rotateX(${(0.5 - y) * 6}deg) scale(1.015)`;
+        cardRef.current.style.transform = `rotateY(${(x - 0.5) * motion.micro.tiltX}deg) rotateX(${(0.5 - y) * motion.micro.tiltY}deg) scale(${motion.micro.tiltScale})`;
       }}
       onPointerLeave={reset}
       onPointerDown={(event) => {
@@ -64,7 +65,8 @@ export default function Tilt({
     >
       <div
         ref={cardRef}
-        className="relative h-full transition-transform duration-300 ease-out [transform-style:preserve-3d]"
+        className="relative h-full transition-transform ease-out [transform-style:preserve-3d]"
+        style={{ transitionDuration: `${motion.micro.duration}s` }}
       >
         {children}
       </div>

@@ -120,7 +120,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={submission.status === "sending"}
-        className="rounded-full bg-electric px-6 py-3 font-medium hover:bg-electric/80 disabled:cursor-wait disabled:opacity-60"
+        className="rounded-full bg-electric px-6 py-3 font-medium text-text-on-accent hover:bg-electric/80 disabled:cursor-wait"
       >
         {submission.status === "sending" ? "Sending…" : "Send message"}
       </button>
@@ -128,7 +128,7 @@ export default function ContactForm() {
         role="status"
         aria-live="polite"
         className={`min-h-5 text-sm ${
-          submission.status === "error" ? "text-rose-300" : "text-cyan"
+          submission.status === "error" ? "text-text-error" : "text-cyan"
         }`}
       >
         {submission.message}

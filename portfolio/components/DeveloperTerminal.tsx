@@ -88,7 +88,7 @@ export default function DeveloperTerminal() {
       <p className="mt-2 text-sm leading-relaxed text-white/60">
         Read-only portfolio commands only. No shell, scripts, or arbitrary command execution.
       </p>
-      <details className="mt-4 overflow-hidden rounded-xl border border-cyan/20 bg-[#070c16]">
+      <details className="fixed-dark-surface mt-4 overflow-hidden rounded-xl border border-cyan/20 bg-[#070c16]">
         <summary className="cursor-pointer px-4 py-3 font-mono text-sm text-cyan">
           Open terminal
         </summary>

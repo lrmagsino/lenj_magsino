@@ -23,7 +23,7 @@ export default function ProjectShowcase() {
         className="relative z-10 py-20 sm:py-28 lg:py-32"
       >
         <div className="mx-auto max-w-6xl px-5">
-          <div data-reveal className="mb-8 sm:mb-12">
+          <div data-motion-heading="mask" className="mb-8 sm:mb-12">
             <p className="eyebrow mb-3">03 — Projects</p>
             <h2 className="h2">Selected work.</h2>
           </div>
@@ -67,32 +67,36 @@ export default function ProjectShowcase() {
                   <div className="pointer-events-none relative flex min-h-0 flex-1 flex-col gap-2.5 p-3 sm:gap-4 sm:p-5">
                     <ProjectImage
                       project={project}
+                      source="cover"
                       compact
                       preload={project.id === "docugraph"}
                     />
-                    <div className="flex flex-1 flex-col">
+                    <div data-project-card-details className="min-h-0 flex flex-1 flex-col">
                     <p className="eyebrow">
-                      {String(index + 1).padStart(2, "0")}
+                      {String(index + 1).padStart(2, "0")} /{" "}
+                      {String(projects.length).padStart(2, "0")}
                       {project.flagship && " · Flagship"}
                     </p>
-                    <h3 className="mt-1 font-display text-base font-bold leading-tight sm:mt-2 sm:text-2xl">
+                    <h3 data-project-title className="mt-1 font-display text-base font-bold leading-tight sm:mt-2 sm:text-2xl">
                       {project.name}
                     </h3>
-                    <p className="mt-1 text-xs leading-4 text-violet sm:text-base sm:leading-normal">
+                    <p data-project-tag className="mt-1 text-xs leading-4 text-violet sm:text-base sm:leading-normal">
                       {project.tag}
                     </p>
-                    <p className="mt-2 text-xs leading-[1.4] text-white/75 sm:mt-3 sm:text-base sm:leading-normal">
+                    <p data-project-description className="mt-2 text-xs leading-[1.4] text-white/75 sm:mt-3 sm:text-base sm:leading-normal">
                       {project.desc}
                     </p>
                     {project.stack.length > 0 ? (
                       <ul
+                        data-project-stack
                         aria-label="Featured technologies"
                         className="mt-2 flex flex-wrap gap-2 sm:mt-3"
                       >
-                        {project.stack.map((technology) => (
+                        {project.stack.map((technology, technologyIndex) => (
                           <li
                             key={technology}
-                            className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] leading-4 text-white/75 sm:text-xs"
+                            style={{ transitionDelay: `${technologyIndex * 20}ms` }}
+                            className="technology-chip rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] leading-4 text-white/75 sm:text-xs"
                           >
                             {technology}
                           </li>
@@ -161,7 +165,7 @@ export default function ProjectShowcase() {
         {selected && (
           <div>
             <div className="theme-image-frame border-b border-white/10 bg-[#090f20] p-2 sm:p-6">
-              <ProjectImage project={selected} preview />
+              <ProjectImage project={selected} source="cover" preview />
             </div>
             <div className="p-4 sm:p-10">
               <p className="eyebrow">Project overview</p>
@@ -198,10 +202,11 @@ export default function ProjectShowcase() {
                 <div className="mt-6 sm:mt-7">
                   <h3 className="font-display font-semibold">Technologies</h3>
                   <ul className="mt-3 flex flex-wrap gap-2">
-                    {selected.stack.map((technology) => (
+                    {selected.stack.map((technology, technologyIndex) => (
                       <li
                         key={technology}
-                        className="rounded-full border border-electric/30 bg-midnight/60 px-2.5 py-1 text-[11px] text-white/75 sm:px-3 sm:py-1.5 sm:text-xs"
+                        style={{ transitionDelay: `${technologyIndex * 20}ms` }}
+                        className="technology-chip rounded-full border border-electric/30 bg-midnight/60 px-2.5 py-1 text-[11px] text-white/75 sm:px-3 sm:py-1.5 sm:text-xs"
                       >
                         {technology}
                       </li>

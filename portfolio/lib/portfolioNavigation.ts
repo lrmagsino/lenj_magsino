@@ -53,10 +53,15 @@ export function readPortfolioReturn(): PortfolioReturnState | null {
   };
 }
 
-export function consumePortfolioReturnMarker() {
+export function hasPendingPortfolioReturnMarker() {
   const pending = sessionStorage.getItem(RETURN_PENDING_KEY) === "1";
-  sessionStorage.removeItem(RETURN_PENDING_KEY);
-  return pending && readPortfolioReturn() !== null;
+  if (!pending) return false;
+
+  const state = readPortfolioReturn();
+  if (state) return true;
+
+  clearPortfolioReturn();
+  return false;
 }
 
 export function hasPendingPortfolioReturn(projectId: string) {

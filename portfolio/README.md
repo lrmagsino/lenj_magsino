@@ -25,7 +25,7 @@ Restart the development server after adding the key. In Vercel, add the same var
 
 - `lib/content.ts` contains the profile, projects, and skill groups.
 - Featured project descriptions, verified links, technologies, image dimensions, captions, and case-study content are managed in `lib/content.ts`.
-- Authentic project screenshots are stored in `public/images/projects/` by project. Replace an image file and update its metadata in `lib/content.ts` when a new screenshot is available.
+- User-supplied project covers are stored as `cover.png` in each `public/images/projects/<project>/` folder. Selected Work cards and cinematic overviews use these covers; each project's `image` in `lib/content.ts` remains separate for full case-study visuals and authentic screenshots.
 - The DocuGraph and Mayari project overview team galleries are implemented in `components/DocuGraphTeam.tsx`; supplied original team photographs are stored in their respective `public/images/projects/` folders.
 - The DocuGraph case study includes a source-informed comparison, interactive architecture explorer, thesis test-case selector, side-by-side and screenshot-wipe comparison views, and a cinematic evidence viewer. The wipe is explicitly labeled as an unregistered visual comparison, not a detection overlay. Public evidence screenshots are stored under `public/images/projects/docugraph/evidence/`; invoice and receipt screenshots are intentionally withheld until their contact, signature, and transaction details can be redacted.
 - The DocuGraph comparison distinguishes model confidence from accuracy. The supplied thesis summary does not define a ground-truth evaluation protocol, and some summary confidence values conflict with individual test screenshots; those numbers are therefore labeled as source-reported confidence, not validated performance gains.
@@ -41,7 +41,19 @@ Restart the development server after adding the key. In Vercel, add the same var
 - Issuer names use accessible text marks until verified official brand assets are added.
 - `CONTENT_TODO.md` records details that are still needed to complete the content.
 
-Featured project cards and case studies use responsive, aspect-ratio-preserving screenshots. Missing live demos or repositories are omitted rather than shown as unavailable links.
+Featured project cards and cinematic overviews use responsive, aspect-ratio-preserving project covers. Full case studies retain their existing visuals, screenshots, and evidence. Missing live demos or repositories are omitted rather than shown as unavailable links.
+
+Five full case studies include lazy-loaded interactive portfolio demos: synchronized sample AOS/POS order flow for Red Warriors, local assignment and class tracking for Mayari, an informational event and registration-form preview for CS Expo, a personalized invitation and local RSVP preview for Wedding, and saved-evidence replay for DocuGraph. Each demo is isolated to its case-study page and clearly distinguishes browser-only sample behavior from the original project; none connects to production services or sends demo form data. The Red Warriors prototype was browser-tested at mobile widths down to 320px and on desktop.
+
+## LenjiPT portfolio assistant
+
+LenjiPT appears after Selected Work and before Education. The embedded section and floating chat share the same in-memory conversation, including recent project references and list context; clearing it removes the conversation, and it is not saved between page visits. Its records use portfolio data from `lib/content.ts`, `lib/education.ts`, and `lib/certifications.ts`, plus shared source-reviewed engineering facts in `lib/projectEngineeringNotes.ts`.
+
+LenjiPT is a local retrieval-and-template guide, not a connected generative AI model. It uses fielded BM25-style ranking, curated English/Filipino/Taglish synonyms and examples, project aliases, typo-tolerant matching, rule-based intent/scope handling, language-aware response framing, and bounded in-memory follow-up context. The same canonical facts serve all detected languages; query examples guide retrieval but do not train a model. No embedding model, external inference service, API key, or usage charge is involved.
+
+Answers use a reusable structured format with concise summaries, topic-specific sections, lists, technology chips, project comparison tables, source references, safe case-study/section actions, and contextual follow-up buttons. Project records identify whether information is portfolio-listed or source-reviewed and preserve important implementation boundaries—for example, heuristic graph aggregation versus a trained GNN, independent Red Warriors AOS/POS prototypes, and production versus browser-only demo features. Unknown portfolio details and out-of-scope requests remain explicit rather than being filled with guesses. External actions are limited to verified portfolio hosts. As with any hand-built retrieval vocabulary, it may miss phrasings or details not represented in its content.
+
+Run the 103-case regression suite with `npm run test:lenjipt` and the separate 22-question held-out retrieval/language evaluation with `npm run test:lenjipt:heldout`. The held-out questions are not runtime query examples; their measured scores are a small evaluation result, not a claim of exhaustive language coverage.
 
 ## Motion
 

@@ -11,7 +11,7 @@ import {
   useRef,
   type ReactNode,
 } from "react";
-import { consumePortfolioReturnMarker } from "@/lib/portfolioNavigation";
+import { hasPendingPortfolioReturnMarker } from "@/lib/portfolioNavigation";
 
 export type ExperiencePhase = "intro" | "intro-exiting" | "main-entering" | "ready";
 
@@ -49,7 +49,11 @@ function experienceReducer(
       if (state.initialized) return state;
       return {
         initialized: true,
-        phase: action.playIntro ? "intro" : "main-entering",
+        phase: action.playIntro
+          ? "intro"
+          : action.resumePortfolio
+            ? "ready"
+            : "main-entering",
         resumePortfolio: action.resumePortfolio,
       };
     case "begin-exit":
@@ -75,7 +79,7 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const markReady = useCallback(() => dispatch({ type: "ready" }), []);
 
   useEffect(() => {
-    const resumePortfolio = consumePortfolioReturnMarker();
+    const resumePortfolio = hasPendingPortfolioReturnMarker();
     const navigationEntry = performance.getEntriesByType(
       "navigation",
     )[0] as PerformanceNavigationTiming | undefined;

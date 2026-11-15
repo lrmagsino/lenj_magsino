@@ -17,6 +17,15 @@ export const links = {
   resume: profile.resume,
 };
 
+type ProjectArtwork = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  label: string;
+  caption: string;
+};
+
 export type Project = {
   id: string;
   name: string;
@@ -28,13 +37,8 @@ export type Project = {
   role: string;
   repo?: string;
   demo?: string;
-  image: {
-    src: string;
-    width: number;
-    height: number;
-    alt: string;
-    caption: string;
-  };
+  cover: ProjectArtwork;
+  image: ProjectArtwork;
   problem: string;
   approach: string;
   outcome: string;
@@ -62,11 +66,20 @@ export const projects: Project[] = [
     role: "Full-stack developer on the DocuGraph project.",
     repo: "https://github.com/lenjimagsino/DOCUGRAPH_WEBSITE",
     demo: "https://docugraph.site/",
+    cover: {
+      src: "/images/projects/docugraph/cover.png",
+      width: 1365,
+      height: 768,
+      alt: "DocuGraph cover with green document-analysis graphics and connected graph nodes",
+      label: "Project cover",
+      caption: "Custom-designed cover for DocuGraph.",
+    },
     image: {
       src: "/images/projects/docugraph/desktop.webp",
       width: 1440,
       height: 900,
       alt: "Screenshot of the DocuGraph live landing page and document-analysis overview",
+      label: "Website screenshot",
       caption: "Captured from the public DocuGraph website.",
     },
     problem:
@@ -91,11 +104,20 @@ export const projects: Project[] = [
     ],
     role: "Lead developer of Mayari.",
     repo: "https://github.com/ostol-uriel/Computahhh",
+    cover: {
+      src: "/images/projects/mayari/cover.png",
+      width: 1365,
+      height: 768,
+      alt: "Mayari cover with a golden crescent moon against a purple, midnight-inspired background",
+      label: "Project cover",
+      caption: "Custom-designed cover for Mayari.",
+    },
     image: {
       src: "/images/projects/mayari/extension-popup.webp",
       width: 425,
       height: 624,
       alt: "User-provided screenshot of the Mayari Chrome extension dashboard",
+      label: "Application screenshot",
       caption: "Mayari extension screenshot supplied for this portfolio.",
     },
     problem:
@@ -120,11 +142,20 @@ export const projects: Project[] = [
       "Gradle 7.5",
     ],
     role: "Full-Stack Developer · Academic Project.",
+    cover: {
+      src: "/images/projects/red-warriors/cover.png",
+      width: 1365,
+      height: 768,
+      alt: "Red Warriors AOS and POS cover with University of the East branding and a red warrior illustration",
+      label: "Project cover",
+      caption: "Custom-designed cover for the combined Red Warriors AOS & POS Android project.",
+    },
     image: {
       src: "/images/projects/red-warriors/presentation.webp",
       width: 1439,
       height: 688,
       alt: "Lenj presenting an Android application with code and a University of the East login screen visible",
+      label: "Presentation photo",
       caption: "Presenting the Red Warriors Advanced Ordering System & Point of Sale.",
     },
     problem:
@@ -156,11 +187,20 @@ export const projects: Project[] = [
     role:
       "Frontend team member; contributed registration form validation, error handling, and responsive interface improvements as part of the CS Expo Developers team.",
     demo: "https://cs-expo-main-website.vercel.app/",
+    cover: {
+      src: "/images/projects/cs-expo/cover.png",
+      width: 1365,
+      height: 768,
+      alt: "CS Expo 2026 cover with retro-futuristic teal and orange architecture and technology illustrations",
+      label: "Project cover",
+      caption: "Custom-designed cover for CS Expo 2026.",
+    },
     image: {
       src: "/images/projects/cs-expo/hero.png",
       width: 1572,
       height: 768,
       alt: "CS Expo 2026 Mission: Tomorrow event website hero artwork",
+      label: "Website screenshot",
       caption: "CS Expo 2026 — Reimagining tomorrow, today.",
     },
     problem:
@@ -189,11 +229,20 @@ export const projects: Project[] = [
     role: "Full-stack developer of the Fritz & Princess wedding website.",
     repo: "https://github.com/lrmagsino/FritzAndPrincess_Wedding2027",
     demo: "https://lrmagsino.github.io/FritzAndPrincess_Wedding2027/",
+    cover: {
+      src: "/images/projects/wedding/cover.png",
+      width: 1365,
+      height: 768,
+      alt: "Fritz and Princess wedding cover with a cream F and P monogram and burgundy floral artwork",
+      label: "Project cover",
+      caption: "Custom-designed cover for the Fritz & Princess wedding website.",
+    },
     image: {
       src: "/images/projects/wedding/desktop.webp",
       width: 1424,
       height: 749,
       alt: "Screenshot of the opened Fritz and Princess wedding invitation hero",
+      label: "Website screenshot",
       caption: "Captured from the opened live Fritz & Princess invitation.",
     },
     problem:

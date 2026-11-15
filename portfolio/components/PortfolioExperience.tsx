@@ -9,6 +9,10 @@ import EducationTimeline from "@/components/EducationTimeline";
 import ExperienceActivities from "@/components/ExperienceActivities";
 import CertificationGallery from "@/components/CertificationGallery";
 import { About, Skills, Projects, Contact } from "@/components/Sections";
+import AskLjmAssistant from "@/components/AskLjmAssistant";
+import LenjiPTSection from "@/components/LenjiPTSection";
+import { LenjiPTProvider } from "@/components/LenjiPTProvider";
+import ProjectScrollIndicator from "@/components/ProjectScrollIndicator";
 
 export default function PortfolioExperience({
   resumeAvailable,
@@ -17,30 +21,38 @@ export default function PortfolioExperience({
 }) {
   const { phase } = useExperience();
   const mainActive = phase === "main-entering" || phase === "ready";
-  const motionActive = phase === "main-entering" || phase === "ready";
 
   return (
-    <>
+    <LenjiPTProvider resumeAvailable={resumeAvailable}>
+      <>
       <Nav resumeAvailable={resumeAvailable} />
       <PortfolioIntro />
+      <Motion />
+      {mainActive && (
+        <>
+          <AskLjmAssistant />
+          <ProjectScrollIndicator />
+        </>
+      )}
       <main
         id="main"
         data-experience-phase={phase}
         aria-hidden={!mainActive}
         inert={!mainActive}
-        className="experience-main relative isolate"
+        className="experience-main theme-aware-content relative isolate"
         style={{ visibility: mainActive ? "visible" : "hidden" }}
       >
         <Hero resumeAvailable={resumeAvailable} />
         <About />
         <Skills />
         <Projects />
+        <LenjiPTSection />
         <EducationTimeline />
         <ExperienceActivities />
         <CertificationGallery />
         <Contact />
-        {motionActive && <Motion />}
       </main>
-    </>
+      </>
+    </LenjiPTProvider>
   );
 }

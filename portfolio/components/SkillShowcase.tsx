@@ -48,7 +48,7 @@ export default function SkillShowcase() {
           </span>
         ))}
         <div className="relative mx-auto max-w-6xl">
-          <div data-reveal className="mb-10 sm:mb-12">
+          <div data-motion-heading="glide" className="mb-10 sm:mb-12">
             <p className="eyebrow mb-3">02 — Skills</p>
             <h2 className="h2">Tools I work with.</h2>
           </div>

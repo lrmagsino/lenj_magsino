@@ -26,8 +26,8 @@ export default function EducationTimeline() {
         className="pointer-events-none absolute -right-28 top-20 -z-10 h-80 w-80 rounded-full bg-violet/15 blur-3xl"
       />
       <div className="mx-auto max-w-6xl">
-        <div data-reveal className="mb-12">
-          <p className="eyebrow mb-3">04 — Education</p>
+        <div data-motion-heading="rise" className="mb-12">
+          <p className="eyebrow mb-3">05 — Education</p>
           <h2 className="h2">Where I’m learning.</h2>
           <p className="mt-5 max-w-2xl text-white/65">
             My academic path from ICT in senior high school to an undergraduate

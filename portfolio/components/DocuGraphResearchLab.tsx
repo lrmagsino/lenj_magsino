@@ -307,7 +307,7 @@ export default function DocuGraphResearchLab() {
   };
 
   return (
-    <section className="mt-14 overflow-hidden rounded-[2rem] border border-cyan/30 bg-gradient-to-br from-midnight via-[#0b1224] to-charcoal shadow-[0_30px_120px_-35px_rgba(47,107,255,0.72)]">
+    <section className="fixed-dark-surface mt-14 overflow-hidden rounded-[2rem] border border-cyan/30 bg-gradient-to-br from-midnight via-[#0b1224] to-charcoal shadow-[0_30px_120px_-35px_rgba(47,107,255,0.72)]">
       <header className="border-b border-white/10 px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
         <p className="eyebrow">DocuGraph research lab</p>
         <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">

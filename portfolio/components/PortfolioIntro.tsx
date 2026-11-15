@@ -14,7 +14,7 @@ const CODE_SYMBOLS = [
   { value: "async", left: "86%", top: "47%" },
   { value: "[ ]", left: "11%", top: "47%" },
 ];
-const REVEALED_NAME_HOLD_SECONDS = 4;
+const REVEALED_NAME_HOLD_SECONDS = 2.5;
 
 export default function PortfolioIntro() {
   const { phase, initialized, beginIntroExit, enterMain } = useExperience();

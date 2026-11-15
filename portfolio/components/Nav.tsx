@@ -6,7 +6,7 @@ import { links } from "@/lib/content";
 import { useExperience } from "@/components/Experience";
 import { usePortfolioTheme } from "@/components/ThemeProvider";
 
-const items = ["home", "about", "skills", "projects", "education", "activities", "certifications", "contact"];
+const items = ["home", "about", "skills", "projects", "lenjipt", "education", "activities", "certifications", "contact"];
 
 export default function Nav({ resumeAvailable }: { resumeAvailable: boolean }) {
   const [open, setOpen] = useState(false);
@@ -81,7 +81,7 @@ export default function Nav({ resumeAvailable }: { resumeAvailable: boolean }) {
     <header
       aria-hidden={!mainActive}
       inert={!mainActive}
-      className={`fixed inset-x-0 top-0 z-50 bg-midnight/60 backdrop-blur-md transition-opacity duration-500 ${
+      className={`theme-aware-content fixed inset-x-0 top-0 z-50 bg-midnight/60 backdrop-blur-md transition-opacity duration-500 ${
         mainActive ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >
@@ -107,7 +107,7 @@ export default function Nav({ resumeAvailable }: { resumeAvailable: boolean }) {
                   active === item ? "text-cyan" : "text-white/70"
                 }`}
               >
-                {item}
+                {item === "lenjipt" ? "LenjiPT" : item}
               </a>
             </li>
           ))}

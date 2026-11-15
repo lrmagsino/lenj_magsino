@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
+import { motion } from "@/lib/motion";
 
 function resetInternalScroll(dialog: HTMLDialogElement, panel: HTMLDivElement) {
   dialog.scrollTop = 0;
@@ -75,8 +76,8 @@ export default function CinematicDialog({
           scaleX: 1,
           scaleY: 1,
           opacity: 1,
-          duration: 0.62,
-          ease: "power3.inOut",
+          duration: motion.cinematic.dialogInDuration,
+          ease: motion.cinematic.dialogEase,
           clearProps: "transform,opacity",
           onComplete: resetScroll,
         },
@@ -138,8 +139,8 @@ export default function CinematicDialog({
       scaleX: sourceRect.width / targetRect.width,
       scaleY: sourceRect.height / targetRect.height,
       opacity: 0.82,
-      duration: 0.48,
-      ease: "power3.inOut",
+      duration: motion.cinematic.dialogOutDuration,
+      ease: motion.cinematic.dialogEase,
       onComplete: () => dialog.close(),
     });
   };

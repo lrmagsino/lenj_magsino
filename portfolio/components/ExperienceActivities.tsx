@@ -14,8 +14,8 @@ export default function ExperienceActivities() {
         className="pointer-events-none absolute -left-28 top-16 h-80 w-80 rounded-full bg-electric/15 blur-3xl"
       />
       <div className="relative mx-auto max-w-6xl">
-        <div data-reveal className="mb-8 sm:mb-12">
-          <p className="eyebrow mb-3">05 — Activities</p>
+        <div data-motion-heading="glide" className="mb-8 sm:mb-12">
+          <p className="eyebrow mb-3">06 — Activities</p>
           <h2 className="h2">Learning by building together.</h2>
         </div>
 

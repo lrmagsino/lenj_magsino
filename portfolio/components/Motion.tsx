@@ -6,30 +6,151 @@ import Lenis from "lenis";
 import { useExperience } from "@/components/Experience";
 import {
   clearPortfolioReturn,
+  hasPendingPortfolioReturnMarker,
   readPortfolioReturn,
+  type PortfolioReturnState,
 } from "@/lib/portfolioNavigation";
+import { motion } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type ProjectProgress = {
+  current: number;
+  total: number;
+  visible: boolean;
+  prompt: boolean;
+};
+
+function publishProjectProgress(
+  section: HTMLElement,
+  current: number,
+  total: number,
+  visible: boolean,
+) {
+  const progress: ProjectProgress = {
+    current,
+    total,
+    visible,
+    prompt: visible && current < total,
+  };
+  const key = `${progress.current}:${progress.total}:${progress.visible}`;
+  if (section.dataset.projectProgressKey === key) return;
+
+  section.dataset.projectProgressKey = key;
+  section.dataset.projectCurrent = String(progress.current);
+  section.dataset.projectTotal = String(progress.total);
+  section.dataset.projectIndicatorVisible = String(progress.visible);
+  section.dataset.projectPrompt = String(progress.prompt);
+  window.dispatchEvent(
+    new CustomEvent<ProjectProgress>("portfolio:project-progress", {
+      detail: progress,
+    }),
+  );
+}
+
 export default function Motion() {
-  const { phase, resumePortfolio } = useExperience();
+  const { phase } = useExperience();
+  const mainActive = phase === "main-entering" || phase === "ready";
 
   useEffect(() => {
-    if (phase !== "ready") return;
+    if (!mainActive) return;
     const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const returnState = resumePortfolio ? readPortfolioReturn() : null;
+    const horizontalSection =
+      document.querySelector<HTMLElement>("[data-hscroll]");
+    const horizontalTrack =
+      horizontalSection?.querySelector<HTMLElement>("[data-project-track]");
+    const projectCards = horizontalTrack
+      ? Array.from(
+          horizontalTrack.querySelectorAll<HTMLElement>("[data-project-card]"),
+        )
+      : [];
+    const projectCount = projectCards.length;
+    const readPendingReturnState = () =>
+      hasPendingPortfolioReturnMarker() ? readPortfolioReturn() : null;
+    const returnState = readPendingReturnState();
     const previousScrollRestoration = history.scrollRestoration;
     const restoreScrollMode = () => {
       history.scrollRestoration = previousScrollRestoration;
     };
 
-    if (resumePortfolio) history.scrollRestoration = "manual";
+    if (returnState) history.scrollRestoration = "manual";
 
     if (reducedMotion) {
-      let frame = requestAnimationFrame(() => {
-        if (returnState) {
-          window.scrollTo({ top: returnState.scrollY, behavior: "instant" });
+      let frame = 0;
+      let sectionVisible = false;
+      const intersections = new Map<number, number>();
+      const cardsObserver =
+        horizontalSection && projectCards.length
+          ? new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  const index = projectCards.indexOf(entry.target as HTMLElement);
+                  if (index >= 0) {
+                    intersections.set(
+                      index,
+                      entry.isIntersecting ? entry.intersectionRatio : 0,
+                    );
+                  }
+                });
+                const activeIndex = [...intersections.entries()].reduce(
+                  (best, candidate) =>
+                    candidate[1] > best[1] ? candidate : best,
+                  [0, 0],
+                )[0];
+                const visible =
+                  sectionVisible && activeIndex < projectCount - 1;
+                publishProjectProgress(
+                  horizontalSection,
+                  activeIndex + 1,
+                  projectCount,
+                  visible,
+                );
+              },
+              {
+                rootMargin: "-25% 0px -25% 0px",
+                threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+              },
+            )
+          : null;
+      const sectionObserver =
+        horizontalSection && cardsObserver
+          ? new IntersectionObserver(([entry]) => {
+              sectionVisible = Boolean(entry?.isIntersecting);
+              const activeIndex = [...intersections.entries()].reduce(
+                (best, candidate) =>
+                  candidate[1] > best[1] ? candidate : best,
+                [0, 0],
+              )[0];
+              publishProjectProgress(
+                horizontalSection,
+                activeIndex + 1,
+                projectCount,
+                sectionVisible && activeIndex < projectCount - 1,
+              );
+            })
+          : null;
+      projectCards.forEach((card) => cardsObserver?.observe(card));
+      if (horizontalSection) sectionObserver?.observe(horizontalSection);
+      const restorePendingReturn = () => {
+        if (location.pathname !== "/") return;
+        const pendingReturn = readPendingReturnState();
+        if (!pendingReturn) return;
+        history.scrollRestoration = "manual";
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const currentReturn = readPendingReturnState();
+          if (!currentReturn) return;
+          window.scrollTo({ top: currentReturn.scrollY, behavior: "instant" });
           clearPortfolioReturn();
+          restoreScrollMode();
+        });
+      };
+      const restoreInitialPosition = () => {
+        const pendingReturn = readPendingReturnState();
+        if (pendingReturn) {
+          window.scrollTo({ top: pendingReturn.scrollY, behavior: "instant" });
+          clearPortfolioReturn();
+          restoreScrollMode();
         } else if (location.hash) {
           const target = document.querySelector(location.hash);
           if (target) {
@@ -38,10 +159,21 @@ export default function Motion() {
               target.getBoundingClientRect().top + window.scrollY + offset;
             window.scrollTo({ top: targetY, behavior: "instant" });
           }
+          restoreScrollMode();
+        } else {
+          restoreScrollMode();
         }
-        restoreScrollMode();
-      });
-      return () => cancelAnimationFrame(frame);
+      };
+      frame = requestAnimationFrame(restoreInitialPosition);
+      window.addEventListener("popstate", restorePendingReturn);
+      window.addEventListener("pageshow", restorePendingReturn);
+      return () => {
+        cancelAnimationFrame(frame);
+        cardsObserver?.disconnect();
+        sectionObserver?.disconnect();
+        window.removeEventListener("popstate", restorePendingReturn);
+        window.removeEventListener("pageshow", restorePendingReturn);
+      };
     }
 
     const lenis = new Lenis({ lerp: 0.09 });
@@ -49,6 +181,33 @@ export default function Motion() {
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
+    // Keep ScrollTrigger from treating the restored scroll as a directional swipe.
+    let preserveRestoredProjectPosition = Boolean(returnState);
+    let restoredReturnState: PortfolioReturnState | null = null;
+    let mounted = true;
+    const resumeProjectSnap = () => {
+      preserveRestoredProjectPosition = false;
+    };
+    const scrollKeys = new Set([
+      "ArrowDown",
+      "ArrowUp",
+      "PageDown",
+      "PageUp",
+      "Home",
+      "End",
+      " ",
+    ]);
+    const handleScrollKey = (event: KeyboardEvent) => {
+      if (!scrollKeys.has(event.key)) return;
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable || target.matches("input, textarea, select"))
+      ) {
+        return;
+      }
+      resumeProjectSnap();
+    };
     const pauseForOverlay = () => lenis.stop();
     const resumeAfterOverlay = () => {
       lenis.start();
@@ -66,17 +225,20 @@ export default function Motion() {
       const offset = matchMedia("(max-width: 767px)").matches ? -72 : -88;
       const targetY =
         target.getBoundingClientRect().top + window.scrollY + offset;
+      resumeProjectSnap();
       lenis.scrollTo(targetY);
     };
     document.addEventListener("click", handleAnchorClick);
 
-    const horizontalSection = document.querySelector<HTMLElement>("[data-hscroll]");
-    const horizontalTrack = horizontalSection?.querySelector<HTMLElement>("[data-project-track]");
+    document.addEventListener("wheel", resumeProjectSnap, { passive: true });
+    document.addEventListener("touchstart", resumeProjectSnap, { passive: true });
+    document.addEventListener("pointerdown", resumeProjectSnap, { passive: true });
+    document.addEventListener("keydown", handleScrollKey);
     const sectionBackground = (section: HTMLElement) =>
       document.documentElement.dataset.theme === "light"
         ? section.dataset.bgLight || "#eef3fa"
         : section.dataset.bg || "#050B1A";
-    const updateSectionBackground = () => {
+    const updateSectionBackground = (immediate = false) => {
       const activeSection = gsap.utils
         .toArray<HTMLElement>("section[data-bg]")
         .find((section) => {
@@ -84,25 +246,99 @@ export default function Motion() {
           return bounds.top <= innerHeight * 0.55 && bounds.bottom >= innerHeight * 0.55;
         });
       if (activeSection) {
+        const backgroundColor = sectionBackground(activeSection);
+        if (immediate) {
+          gsap.killTweensOf(document.body, "backgroundColor");
+          gsap.set(document.body, { backgroundColor });
+          return;
+        }
         gsap.to(document.body, {
-          backgroundColor: sectionBackground(activeSection),
+          backgroundColor,
           duration: 0.45,
           overwrite: true,
         });
       }
     };
-    const handleThemeChange = () => updateSectionBackground();
+    const handleThemeChange = () => updateSectionBackground(true);
     window.addEventListener("portfolio:theme-change", handleThemeChange);
+    const restorePortfolioPosition = (state: PortfolioReturnState) => {
+      preserveRestoredProjectPosition = true;
+      restoredReturnState = state;
+      history.scrollRestoration = "manual";
+      lenis.resize();
+      lenis.scrollTo(state.scrollY, { immediate: true, force: true });
+      ScrollTrigger.update();
+      clearPortfolioReturn();
+      restoreScrollMode();
+    };
+    const restorePendingReturn = () => {
+      if (location.pathname !== "/") return;
+      const pendingReturn = readPendingReturnState();
+      if (!pendingReturn) return;
+      preserveRestoredProjectPosition = true;
+      history.scrollRestoration = "manual";
+      ScrollTrigger.refresh();
+      restorePortfolioPosition(pendingReturn);
+    };
+    window.addEventListener("popstate", restorePendingReturn);
+    window.addEventListener("pageshow", restorePendingReturn);
     const context = gsap.context(() => {
       const select = gsap.utils.toArray<HTMLElement>;
 
+      select("[data-motion-heading]").forEach((element) => {
+        const preset = (() => {
+          switch (element.dataset.motionHeading) {
+            case "mask":
+              return motion.section.headings.mask;
+            case "glide":
+              return motion.section.headings.glide;
+            case "focus":
+              return motion.section.headings.focus;
+            case "rise":
+              return motion.section.headings.rise;
+            default:
+              return null;
+          }
+        })();
+        if (!preset) return;
+
+        gsap.fromTo(
+          element,
+          {
+            clipPath: preset.clipPath,
+            x: preset.x,
+            y: preset.y,
+            scale: preset.scale,
+            opacity: preset.opacity,
+          },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            x: 0,
+            y: 0,
+            scale: 1,
+            opacity: 1,
+            duration: preset.duration,
+            ease: preset.ease,
+            clearProps: "clipPath,transform,opacity",
+            scrollTrigger: {
+              trigger: element,
+              start: motion.section.headingStart,
+              once: true,
+            },
+          },
+        );
+      });
+
       select("[data-reveal], .certification-card").forEach((element) => {
         gsap.from(element, {
-          y: 48,
+          y: motion.section.revealDistance,
           opacity: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: element, start: "top 85%" },
+          duration: motion.section.revealDuration,
+          ease: motion.section.revealEase,
+          scrollTrigger: {
+            trigger: element,
+            start: motion.section.triggerStart,
+          },
         });
       });
 
@@ -261,9 +497,6 @@ export default function Motion() {
 
       if (horizontalSection && horizontalTrack) {
         horizontalSection.classList.add("is-scroll-driven");
-        const projectCount = horizontalTrack.querySelectorAll(
-          "[data-project-card]",
-        ).length;
         const snapIncrement = 1 / Math.max(1, projectCount - 1);
         gsap.to(horizontalTrack, {
           x: () =>
@@ -280,13 +513,91 @@ export default function Motion() {
             pin: true,
             scrub: true,
             snap: {
-              snapTo: snapIncrement,
-              directional: true,
+              snapTo: (progress, self) => {
+                if (preserveRestoredProjectPosition) return progress;
+                const snapped =
+                  Math.round(progress / snapIncrement) * snapIncrement;
+                if (
+                  !self ||
+                  !self.direction ||
+                  Math.abs(snapped - progress) < 1e-3 ||
+                  (snapped - progress < 0) === (self.direction < 0)
+                ) {
+                  return snapped;
+                }
+                const next =
+                  progress +
+                  (self.direction < 0 ? -snapIncrement : snapIncrement);
+                return Math.min(
+                  1,
+                  Math.max(
+                    0,
+                    Math.round(next / snapIncrement) * snapIncrement,
+                  ),
+                );
+              },
               delay: 0.12,
               duration: { min: 0.18, max: 0.32 },
               ease: "power1.out",
               inertia: false,
             },
+            onUpdate: (self) => {
+              const current = Math.min(
+                projectCount,
+                Math.round(self.progress * Math.max(0, projectCount - 1)) + 1,
+              );
+              publishProjectProgress(
+                horizontalSection,
+                current,
+                projectCount,
+                self.isActive === true,
+              );
+            },
+            onRefresh: (self) => {
+              const current = Math.min(
+                projectCount,
+                Math.round(self.progress * Math.max(0, projectCount - 1)) + 1,
+              );
+              publishProjectProgress(
+                horizontalSection,
+                current,
+                projectCount,
+                self.isActive === true,
+              );
+            },
+            onEnter: (self) => {
+              const current = Math.min(
+                projectCount,
+                Math.round(self.progress * Math.max(0, projectCount - 1)) + 1,
+              );
+              publishProjectProgress(
+                horizontalSection,
+                current,
+                projectCount,
+                true,
+              );
+            },
+            onEnterBack: (self) => {
+              const current = Math.min(
+                projectCount,
+                Math.round(self.progress * Math.max(0, projectCount - 1)) + 1,
+              );
+              publishProjectProgress(
+                horizontalSection,
+                current,
+                projectCount,
+                true,
+              );
+            },
+            onLeave: () =>
+              publishProjectProgress(
+                horizontalSection,
+                projectCount,
+                projectCount,
+                false,
+              ),
+            onLeaveBack: () =>
+              publishProjectProgress(horizontalSection, 1, projectCount, false),
             end: () =>
               `+=${Math.max(1, horizontalTrack.scrollWidth - document.documentElement.clientWidth)}`,
             invalidateOnRefresh: true,
@@ -295,9 +606,12 @@ export default function Motion() {
       }
     });
 
-    let mounted = true;
     let refreshFrame = requestAnimationFrame(() => {
-      refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh());
+      refreshFrame = requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+        const pendingReturn = readPendingReturnState();
+        if (pendingReturn) restorePortfolioPosition(pendingReturn);
+      });
     });
     const refreshAfterFonts = () => {
       document.fonts.ready.then(() => {
@@ -306,14 +620,15 @@ export default function Motion() {
         refreshFrame = requestAnimationFrame(() => {
           refreshFrame = requestAnimationFrame(() => {
             ScrollTrigger.refresh();
-            if (returnState) {
-              lenis.resize();
-              lenis.scrollTo(returnState.scrollY, {
-                immediate: true,
-                force: true,
-              });
-              ScrollTrigger.update();
-              clearPortfolioReturn();
+            const pendingReturn = readPendingReturnState();
+            if (pendingReturn) {
+              restorePortfolioPosition(pendingReturn);
+            } else if (restoredReturnState) {
+              if (preserveRestoredProjectPosition) {
+                restorePortfolioPosition(restoredReturnState);
+              } else {
+                restoreScrollMode();
+              }
             } else if (location.hash) {
               const target = document.querySelector(location.hash);
               if (target) {
@@ -322,8 +637,10 @@ export default function Motion() {
                   target.getBoundingClientRect().top + window.scrollY + offset;
                 lenis.scrollTo(targetY, { immediate: true });
               }
+              restoreScrollMode();
+            } else {
+              restoreScrollMode();
             }
-            restoreScrollMode();
           });
         });
       });
@@ -340,6 +657,12 @@ export default function Motion() {
       mounted = false;
       cancelAnimationFrame(refreshFrame);
       document.removeEventListener("click", handleAnchorClick);
+      document.removeEventListener("wheel", resumeProjectSnap);
+      document.removeEventListener("touchstart", resumeProjectSnap);
+      document.removeEventListener("pointerdown", resumeProjectSnap);
+      document.removeEventListener("keydown", handleScrollKey);
+      window.removeEventListener("popstate", restorePendingReturn);
+      window.removeEventListener("pageshow", restorePendingReturn);
       window.removeEventListener("portfolio:overlay-open", pauseForOverlay);
       window.removeEventListener("portfolio:overlay-close", resumeAfterOverlay);
       window.removeEventListener("orientationchange", refreshForOrientation);
@@ -348,9 +671,9 @@ export default function Motion() {
       context.revert();
       gsap.ticker.remove(tick);
       lenis.destroy();
-      if (resumePortfolio) restoreScrollMode();
+      if (returnState) restoreScrollMode();
     };
-  }, [phase, resumePortfolio]);
+  }, [mainActive]);
 
   return (
     <>
@@ -450,7 +773,7 @@ export default function Motion() {
 
         <svg
           data-world-layer="near"
-          className="absolute -inset-[16%] h-[132%] w-[132%] origin-center opacity-[0.27] [will-change:transform] max-md:hidden"
+          className="absolute -inset-[16%] h-[132%] w-[132%] origin-center opacity-[0.27] [will-change:transform] max-md:opacity-[0.12]"
           viewBox="0 0 1600 1000"
           preserveAspectRatio="xMidYMid slice"
         >
@@ -482,6 +805,12 @@ export default function Motion() {
             <circle cx="800" cy="850" r="3" />
           </g>
         </svg>
+
+        <div
+          aria-hidden="true"
+          data-world-atmosphere
+          className="world-atmosphere absolute inset-0"
+        />
 
         <div
           aria-hidden="true"

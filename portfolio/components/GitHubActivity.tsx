@@ -147,7 +147,7 @@ async function fetchGitHubData<T>(
 
 function DataError({ message }: { message: string }) {
   return (
-    <p role="alert" className="mt-4 rounded-xl border border-amber-300/25 bg-amber-300/5 p-3 text-sm leading-relaxed text-amber-100/80">
+    <p role="alert" className="mt-4 rounded-xl border border-amber-300/25 bg-amber-300/5 p-3 text-sm leading-relaxed text-text-warning">
       {message}
     </p>
   );

@@ -26,7 +26,7 @@ function CertificateArtwork({
 
   if (certification.certificateImage) {
     return (
-      <div className="theme-image-frame relative aspect-[16/10] overflow-hidden bg-[#11182A]">
+      <div data-certificate-artwork className="fixed-dark-surface theme-image-frame relative aspect-[16/10] overflow-hidden bg-[#11182A]">
         {!loaded && (
           <div
             aria-live={failed ? "polite" : undefined}
@@ -60,7 +60,7 @@ function CertificateArtwork({
   }
 
   return (
-    <div className="theme-certificate-art relative flex aspect-[16/10] flex-col justify-between overflow-hidden border-b border-white/10 bg-[radial-gradient(ellipse_at_80%_15%,#2F6BFF22,transparent_45%),linear-gradient(135deg,#11182A,#080e20)] p-5 sm:p-6">
+    <div data-certificate-artwork className="fixed-dark-surface theme-certificate-art relative flex aspect-[16/10] flex-col justify-between overflow-hidden border-b border-white/10 bg-[radial-gradient(ellipse_at_80%_15%,#2F6BFF22,transparent_45%),linear-gradient(135deg,#11182A,#080e20)] p-5 sm:p-6">
       <div className="absolute -right-10 -top-12 h-40 w-40 rounded-full border border-white/5" />
       <div className="absolute -right-2 -top-4 h-24 w-24 rounded-full border border-white/5" />
       <div className="relative flex items-start justify-between gap-3">
@@ -113,7 +113,7 @@ function CertificationCard({
   return (
     <Tilt className="rounded-2xl">
       <article
-        className="certification-card group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-charcoal/75 transition duration-300 hover:-translate-y-1 hover:border-cyan/35 hover:shadow-[0_24px_70px_-36px_#2F6BFF88]"
+        className="certification-card fixed-dark-surface group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-charcoal transition duration-300 hover:-translate-y-1 hover:border-cyan/35 hover:shadow-[0_24px_70px_-36px_#2F6BFF88]"
         style={{ animationDelay: `${Math.min(index, 7) * 55}ms` }}
       >
         <button
@@ -230,7 +230,7 @@ function CertificationPreviewModal({
                   className="mx-auto max-h-16 w-auto object-contain"
                 />
               ) : (
-                <p className="font-display text-2xl font-semibold text-white/90">
+                <p className="font-display text-2xl font-semibold text-text-primary">
                   {certification.issuer}
                 </p>
               )}
@@ -285,7 +285,7 @@ function CertificationPreviewModal({
               href={certification.verificationUrl}
               target="_blank"
               rel="noreferrer"
-              className="holo-link rounded-full bg-electric px-5 py-3 text-sm font-medium hover:bg-electric/80"
+              className="holo-link rounded-full bg-electric px-5 py-3 text-sm font-medium text-text-on-accent hover:bg-electric/80"
             >
               Verify credential ↗
             </a>
@@ -360,8 +360,8 @@ export default function CertificationGallery() {
       />
       <div className="pointer-events-none absolute bottom-10 right-[8%] -z-10 h-32 w-32 rounded-full border border-violet/10 sm:h-48 sm:w-48" />
       <div className="mx-auto max-w-6xl">
-        <div data-reveal className="mb-10">
-          <p className="eyebrow mb-3">06 — Certifications</p>
+        <div data-motion-heading="focus" className="mb-10">
+          <p className="eyebrow mb-3">07 — Certifications</p>
           <div className="flex flex-wrap items-end justify-between gap-5">
             <div>
               <h2 className="h2">Learning in practice.</h2>

@@ -1,0 +1,125 @@
+{
+  "counts": {
+    "questions": 300,
+    "independentQuestions": 260,
+    "contextTurns": 40,
+    "fullyCorrect": 300,
+    "failures": 0,
+    "statusCorrect": 300,
+    "intentCorrect": 300,
+    "retrievalCases": 261,
+    "retrievalCorrect": 261,
+    "navigationCases": 29,
+    "languageCorrect": 300,
+    "languageCases": 300,
+    "navigationCorrect": 29,
+    "evidenceCorrect": 300,
+    "contextCorrect": 40
+  },
+  "fullyCorrectByLanguage": {
+    "en": {
+      "total": 133,
+      "passed": 133
+    },
+    "fil": {
+      "total": 81,
+      "passed": 81
+    },
+    "taglish": {
+      "total": 86,
+      "passed": 86
+    }
+  },
+  "languageDetectionByExpectedLanguage": {
+    "en": {
+      "total": 133,
+      "correct": 133
+    },
+    "fil": {
+      "total": 81,
+      "correct": 81
+    },
+    "taglish": {
+      "total": 86,
+      "correct": 86
+    }
+  },
+  "accuracyByTopic": {
+    "Ambiguous references": {
+      "total": 3,
+      "passed": 3
+    },
+    "Certifications": {
+      "total": 30,
+      "passed": 30
+    },
+    "CS Expo 2026": {
+      "total": 18,
+      "passed": 18
+    },
+    "DocuGraph": {
+      "total": 21,
+      "passed": 21
+    },
+    "Education": {
+      "total": 15,
+      "passed": 15
+    },
+    "Mayari": {
+      "total": 18,
+      "passed": 18
+    },
+    "Missing evidence": {
+      "total": 16,
+      "passed": 16
+    },
+    "multi-turn context": {
+      "total": 40,
+      "passed": 40
+    },
+    "Out-of-scope questions": {
+      "total": 20,
+      "passed": 20
+    },
+    "Personal background": {
+      "total": 18,
+      "passed": 18
+    },
+    "Portfolio navigation": {
+      "total": 20,
+      "passed": 20
+    },
+    "Recruiter questions": {
+      "total": 18,
+      "passed": 18
+    },
+    "Red Warriors AOS & POS": {
+      "total": 21,
+      "passed": 21
+    },
+    "Technical skills": {
+      "total": 24,
+      "passed": 24
+    },
+    "Wedding Website": {
+      "total": 18,
+      "passed": 18
+    }
+  },
+  "accuracyByDifficulty": {
+    "easy": {
+      "total": 98,
+      "passed": 98
+    },
+    "hard": {
+      "total": 113,
+      "passed": 113
+    },
+    "medium": {
+      "total": 89,
+      "passed": 89
+    }
+  },
+  "failureCategories": {},
+  "failures": []
+}
